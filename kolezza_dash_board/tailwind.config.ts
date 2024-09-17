@@ -9,9 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
+        customBlue: '#A5DAF7', 
+        customDarkBlue: '#052049',
+      }, 
     },
   },
   plugins: [],
