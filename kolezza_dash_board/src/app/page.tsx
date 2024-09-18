@@ -1,13 +1,9 @@
 
-import React from 'react';
-import Dashboard from './components/Dashboard';
-import Sidebar from './components/Sidebar';
+import Layout from './Layout';
 
 export default function Home() {
   return (
-    <div className="flex">
-      <Sidebar/>
-
-    </div>
+    <Layout>
+    </Layout>
   );
 }
