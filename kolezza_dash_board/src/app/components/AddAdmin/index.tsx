@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
@@ -63,7 +64,7 @@ const AdminRegistration = () => {
       {successMessage && <p className="text-green-500">{successMessage}</p>}
 
       {/* First Name and Last Name */}
-      <div className="flex space-x-4">
+      <div className="flex space-x-4 ">
         <div className="flex-1 relative">
           <label className="block text-lg font-medium mb-1">First Name</label>
           <div className="relative">
@@ -71,7 +72,7 @@ const AdminRegistration = () => {
               {...register('firstName')}
               type="text"
               placeholder="Enter first name"
-              className="mt-1 block w-full border-3 border-green rounded-md shadow-sm pl-10 pr-2 py-4"
+              className="mt-1 block w-full border-3 border-[#90BD31] rounded-md shadow-sm pl-10 pr-2 py-4"
             />
             <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
           </div>
@@ -84,7 +85,7 @@ const AdminRegistration = () => {
               {...register('lastName')}
               type="text"
               placeholder="Last name"
-              className="mt-1 block w-full border-3 border-green rounded-md shadow-sm pl-10 pr-2 py-4"
+              className="mt-1 block w-full border-3 border-lightGreen rounded-md shadow-sm pl-10 pr-2 py-4"
             />
             <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
           </div>
@@ -100,7 +101,7 @@ const AdminRegistration = () => {
             {...register('email')}
             type="email"
             placeholder="Enter email address"
-            className="mt-1 block w-full border-3 border-green rounded-md shadow-sm pl-10 pr-2 py-4"
+            className="mt-1 block w-full border-3 border-lightGreen rounded-md shadow-sm pl-10 pr-2 py-4"
           />
           <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
         </div>
@@ -115,7 +116,7 @@ const AdminRegistration = () => {
             {...register('username')}
             type="text"
             placeholder="Enter username"
-            className="mt-1 block w-full border-3 border-green rounded-md shadow-sm pl-10 pr-2 py-4"
+            className="mt-1 block w-full border-3 border-lightGreen rounded-md shadow-sm pl-10 pr-2 py-4"
           />
           <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
         </div>
@@ -131,7 +132,7 @@ const AdminRegistration = () => {
               {...register('password')}
               type="password"
               placeholder="Enter your password"
-              className="mt-1 block w-full border-3 border-green rounded-md shadow-sm pl-10 pr-2 py-4"
+              className="mt-1 block w-full border-3 border-lightGreen rounded-md shadow-sm pl-10 pr-2 py-4"
             />
             <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
           </div>
@@ -144,7 +145,7 @@ const AdminRegistration = () => {
               {...register('confirmPassword')}
               type="password"
               placeholder="Re-enter your password to confirm"
-              className="mt-1 block w-full border-3 border-green rounded-md shadow-sm pl-10 pr-2 py-4"
+              className="mt-1 block w-full border-3 border-lightGreen rounded-md shadow-sm pl-10 pr-2 py-4"
             />
             <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
           </div>
@@ -154,7 +155,7 @@ const AdminRegistration = () => {
 
       <button
         type="submit"
-        className={`w-40 bg-darkblue text-white p-4 mx-auto flex justify-center rounded-lg ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-darkblue'}`}
+        className={`w-40 bg-[#052049] text-white p-4 mx-auto flex justify-center rounded-lg ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#052049]'}`}
         disabled={loading}
       >
         {loading ? 'Saving...' : 'Save'}
