@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -33,7 +34,12 @@ const Sidebar = () => {
       </div>
       <nav className="flex-grow">
         <ul className="space-y-10 ml-6">
-          {menuItems.map((item) => (
+          {[
+            { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
+            { name: 'Patients', icon: Users2, href: '/patients' },
+            { name: 'Profile', icon: UserCircle, href: '/profile' },
+            { name: 'Users', icon: Users, href: 'admin/users' },
+          ].map((item) => (
             <li key={item.name}>
               <Link
                 href={item.href}

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import fetchProgressData from '../../utils/fetchProgressData';
+import fetchProgressData from '../utils/fetchProgressData';
 import 'chart.js/auto';
 
 const Line = dynamic(() => import('react-chartjs-2').then((mod) => mod.Line), {

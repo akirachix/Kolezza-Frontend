@@ -1,10 +1,10 @@
 'use client';
 import React from 'react';
-import useGetChildData from '../../hooks/useGetChildData';
-import useGetProgressData from '../../hooks/useGetChildProgressData';
+import useGetProgressData from '../../components/hooks/useGetChildProgressData';
+import LineChart from '../../components/LineGraph';
+import Layout from '../../../../Layout';
 import PatientDetails from '@/app/components/PatientDetails';
-import LineChart from '@/app/components/LineGraph';
-import Layout from '../../Layout';
+import useGetChildData from '../../components/hooks/useGetChildData';
 
 
 const PatientPage = ({ params: { id } }: { params: { id: string } }) => {
