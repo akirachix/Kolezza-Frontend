@@ -40,7 +40,7 @@ jobs:
 
       - name: Disable Next.js Telemetry
         working-directory: ./kolezza_dash_board
-        run: echo "NEXT_TELEMETRY_DISABLED=1" >> .env  # Disable telemetry by adding to .env
+        run: echo "NEXT_TELEMETRY_DISABLED=1" >> .env 
 
       - name: Build Next.js project
         working-directory: ./kolezza_dash_board
