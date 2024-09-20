@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { fetchTherapist } from '../utils/newTherapistPost';
 import { TherapistRegistrationData, TherapistRegistrationState, UseTherapistRegistrationReturn } from '../utils/types';
