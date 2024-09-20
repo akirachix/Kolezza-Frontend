@@ -103,8 +103,8 @@ export default function DashboardTable() {
       </div>
 
   
-      <div className={`grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 mb-6 
-        ${isNH ? 'nh:grid-cols-3 nh:gap-3 nh:w-full nh:justify-center' : 'lg:justify-center lg:gap-52 lg:w-[900px] lg:ml-[30px]'}
+      <div className={`grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 mb-6 ml-6
+        ${isNH ? 'nh:grid-cols-3 nh:gap-2 nh:w-full nh:ml-[20px]' : 'lg:justify-center lg:gap-52 lg:w-[900px] lg:ml-[90px]'}
       `}>
         <StatBox
           title="TOTAL USERS"
@@ -119,7 +119,7 @@ export default function DashboardTable() {
           isNH={isNH}
         />
         <StatBox
-          title="INACTIVE PATIENTS"
+          title="INACTIVE"
           value={inactivePatients.toString()}
           color="bg-[#052049]"
           isNH={isNH}
