@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { fetchTherapist } from '../utils/newTherapistPost';
 import { TherapistRegistrationData, TherapistRegistrationState, UseTherapistRegistrationReturn } from '../utils/types';
@@ -14,9 +13,7 @@ export const useTherapistRegistration = (): UseTherapistRegistrationReturn => {
         setState((prev: any) => ({ ...prev, loading: true, errorMessage: '', successMessage: '' }));
 
         try {
-            console.log('Registering therapist with data:', data);
             const result = await fetchTherapist(data);
-            console.log('Registration result:', result);
             setState((prev: any) => ({ ...prev, successMessage: 'Registration successful!' }));
         } catch (error) {
             console.error('Registration error:', error);

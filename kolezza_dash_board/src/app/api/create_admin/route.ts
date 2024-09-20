@@ -30,7 +30,6 @@ export async function POST(request: Request) {
 
         return NextResponse.json(result, { status: 201, statusText: "Registration Successful" });
     } catch (error) {
-        console.log({ola: (error as Error).message});
         
         return NextResponse.json({ error: (error as Error).message }, { status: 500 });
     }

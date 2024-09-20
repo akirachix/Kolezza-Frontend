@@ -14,12 +14,9 @@ export const useAdminRegistration = (): UseAdminRegistrationReturn => {
         setState((prev: any) => ({ ...prev, loading: true, errorMessage: '', successMessage: '' }));
 
         try {
-            console.log('Registering admin with data:', data);
             const result = await fetchAdmin(data);
-            console.log('Registration result:', result);
             setState((prev: any) => ({ ...prev, successMessage: 'Registration successful!' }));
         } catch (error) {
-            console.error('Registration error:', error);
             if (error instanceof Error) {
                 if (error.message.includes('Failed to fetch')) {
                     setState((prev: any) => ({ ...prev, errorMessage: 'Unable to connect to the server. Please check your internet connection and try again.' }));
