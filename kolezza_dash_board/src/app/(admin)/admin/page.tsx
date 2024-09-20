@@ -1,13 +1,11 @@
-
 "use client";
 
 import React, { useState, useEffect } from 'react';
 import { Search, Plus } from 'lucide-react'; 
-
+import Link from 'next/link';
 
 import { useUsers } from '@/app/(admin)/admin/components/hooks/useGetUsers';
 import { useChildren } from '@/app/(admin)/admin/components/hooks/useGetChildren';
-
 
 type StatBoxProps = {
   title: string;
@@ -15,7 +13,6 @@ type StatBoxProps = {
   color: string;
   isNH: boolean; 
 };
-
 
 const StatBox: React.FC<StatBoxProps> = ({ title, value, color, isNH }) => {
   return (
@@ -92,17 +89,16 @@ export default function DashboardTable() {
           />
         </div>
         <a href="/admin/add-user" className="href">
-  <button
-    className="flex items-center justify-between border border-[#90BD31] rounded-lg bg-white text-black px-4 py-2"
-    style={{ width: '207px', height: '50px' }}
-  >
-    <Plus className="text-[#90BD31]" />
-    <span>Add User</span>
-  </button>
-</a>
+          <button
+            className="flex items-center justify-between border border-[#90BD31] rounded-lg bg-white text-black px-4 py-2"
+            style={{ width: '207px', height: '50px' }}
+          >
+            <Plus className="text-[#90BD31]" />
+            <span>Add User</span>
+          </button>
+        </a>
       </div>
 
-  
       <div className={`grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 mb-6 ml-6
         ${isNH ? 'nh:grid-cols-3 nh:gap-2 nh:w-full nh:ml-[20px]' : 'lg:justify-center lg:gap-52 lg:w-[900px] lg:ml-[90px]'}
       `}>
@@ -126,12 +122,11 @@ export default function DashboardTable() {
         />
       </div>
 
-    
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden p-6">
-        <table className="min-w-full table-auto -mr-3">
-          <thead className="bg-[#90BD31] text-white border border-black">
+      <div className="bg-white shadow-lg rounded-lg p-6 pr-8">
+        <table className="min-w-full table-auto">
+          <thead className="bg-[#90BD31] text-white">
             <tr>
-              <th className="px-2 py-1 text-center border border-black">Therapist ID</th>
+              <th className="px-2 py-3 text-center border border-black">Therapist ID</th>
               <th className="px-2 py-3 text-center border border-black">Username</th>
               <th className="px-2 py-3 text-center border border-black">Email</th>
               <th className="px-2 py-3 text-center border border-black">First Name</th>
@@ -142,11 +137,13 @@ export default function DashboardTable() {
             {filteredUsers.length > 0 ? (
               filteredUsers.map((user, index) => (
                 <tr key={index} className={index % 2 === 0 ? 'bg-[#D9D9D9]' : 'bg-white'}>
-                  <td className="px-6 py-4 text-center">{user.id}</td>
-                  <td className="px-6 py-4 text-center">{user.username}</td>
-                  <td className="px-6 py-4 text-center">{user.email || '-'}</td>
-                  <td className="px-6 py-4 text-center">{user.first_name}</td>
-                  <td className="px-6 py-4 text-center">{user.role}</td>
+                  <Link href={`/admin/patient/${user.id}`} className="contents">
+                    <td className="px-4 py-4 text-center">{user.id}</td>
+                    <td className="px-4 py-4 text-center">{user.username}</td>
+                    <td className="px-4 py-4 text-center">{user.email || '-'}</td>
+                    <td className="px-4 py-4 text-center">{user.first_name}</td>
+                    <td className="px-4 py-4 text-center">{user.role}</td>
+                  </Link>
                 </tr>
               ))
             ) : (
@@ -159,7 +156,6 @@ export default function DashboardTable() {
           </tbody>
         </table>
 
- 
         <nav className="flex justify-center mt-6 bg-white">
           <ul className="inline-flex">
             {pageNumbers.map((number) => (

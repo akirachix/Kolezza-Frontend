@@ -11,8 +11,13 @@ const config: Config = {
       colors: {
         customBlue: '#A5DAF7', 
         customDarkBlue: '#052049',
+        customGreen:'#8BC34A',
         lightGreen:'#90BD31',
       }, 
+      screens: {
+        'nh': {'min': '1000px', 'max': '1279px'},
+        'nhm':{'min': '1280px', 'max':'1280px'},
+      },
     },
   },
   plugins: [],

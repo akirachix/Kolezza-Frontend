@@ -1,6 +1,6 @@
 "use client";  
 import React from 'react';
-import Sidebar from '../components/Sidebar';  
+import Sidebar from '../(admin)/admin/components/Sidebar';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
  

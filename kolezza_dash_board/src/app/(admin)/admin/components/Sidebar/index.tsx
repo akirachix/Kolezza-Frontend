@@ -21,7 +21,7 @@ const Sidebar = () => {
         <ul className="space-y-10 ml-4">
           {[
             { name: 'Dashboard', icon: LayoutDashboard, href: '/' },
-            { name: 'Patients', icon: Users2, href: '/patients' },
+            { name: 'Patients', icon: Users2, href: 'admin/patient/1' },
             { name: 'Profile', icon: UserCircle, href: '/profile' },
             { name: 'Users', icon: Users, href:'admin/users', active: true }, // Mark Users as active
           ].map((item) => (
