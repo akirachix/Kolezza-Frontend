@@ -23,7 +23,7 @@ const Sidebar = () => {
             { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
             { name: 'Patients', icon: Users2, href: '/patients' },
             { name: 'Profile', icon: UserCircle, href: '/profile' },
-            { name: 'Users', icon: Users, href: '/users' },
+            { name: 'Users', icon: Users, href: 'admin/users' },
           ].map((item) => (
             <li key={item.name}>
               <Link 
