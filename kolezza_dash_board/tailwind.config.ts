@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         customBlue: '#A5DAF7', 
         customDarkBlue: '#052049',
+        lightGreen:'#90BD31',
       }, 
     },
   },
