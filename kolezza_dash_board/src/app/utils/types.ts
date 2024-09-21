@@ -64,16 +64,7 @@ export interface TherapistRegistrationData {
   
   // Fetch therapist function type
   export type FetchTherapistFunction = (data: TherapistRegistrationData) => Promise<RegistrationSuccessResponse>;
-
-
-
-
-
-
-
-
-
-
+  
 // Admin Data Types
 
 export interface AdminRegistrationData {
@@ -119,3 +110,18 @@ export interface UseAdminRegistrationReturn {
 
 // Fetch therapist function type
 export type FetchAdminFunction = (data: AdminRegistrationData) => Promise<RegistrationSuccessResponse>;
+
+export interface UserProfileData {
+    first_name: string;
+    middle_name?: string;
+    last_name: string;
+    email: string;
+    phone: string;
+    hospital: string;
+    role: string;
+  }
+
+export  interface LoginCredentials {
+    username: string;
+    password: string;
+  }
