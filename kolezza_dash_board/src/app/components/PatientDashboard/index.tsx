@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react';
 import { Search, Plus } from 'lucide-react';
-import useGetPatients from '@/app/hooks/useGetPatients';
+import useFetchPatients from '@/app/hooks/useFetchPatients';
 import { FetchedPatient } from '@/app/utils/types';
 
 const PatientDashboard = () => {
-  const { patients, loading, error } = useGetPatients();
+  const { patients, loading, error } = useFetchPatients();
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 

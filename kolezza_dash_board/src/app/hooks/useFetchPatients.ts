@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FetchedPatient } from '../utils/types'; 
 import { fetchPatients } from '../utils/fetchPatients';
 
-const useGetPatients = () => {
+const useFetchPatients = () => {
   const [patients, setPatients] = useState<FetchedPatient[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -31,4 +31,4 @@ const useGetPatients = () => {
   return { patients, loading, error };
 };
 
-export default useGetPatients;
+export default useFetchPatients;
