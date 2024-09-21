@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { useSearchUsers } from "@/app/utils/searchUsers";
+// import { useSearchUsers } from "@/app/utils/searchUsers";
+// import UseSearchUsers from "../utils/searchUsers";
+import UseSearchUsers from "../utils/searchUsers";
 
 export const useSearch = () => {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [fetchLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notFound, setNotFound] = useState(false);
 
@@ -33,7 +35,7 @@ export const useSearch = () => {
       setNotFound(false);
 
       try {
-        const result = await useSearchUsers(query);
+        const result = await UseSearchUsers(query);
         if (result.length > 0) {
           setSearchResults(result);
           setNotFound(false);
@@ -55,7 +57,7 @@ export const useSearch = () => {
   return {
     query,
     searchResults,
-    loading,
+    fetchLoading,
     error,
     notFound,
     handleInputChange,

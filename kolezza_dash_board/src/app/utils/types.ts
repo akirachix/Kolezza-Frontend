@@ -51,12 +51,6 @@ export interface TherapistRegistrationData {
 
 
 
-
-
-
-
-
-
 // Admin Data Types
 
 export interface AdminRegistrationData {

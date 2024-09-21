@@ -22,7 +22,7 @@ export function useChildren() {
             }
 
             const responseData: FetchChildrenResponse = await response.json();
-            const children = responseData.child || []; // Adjusted to match your API response
+            const children = responseData.child || []; 
 
             const active = children.filter(child => !child.is_deleted).length;
             const inactive = children.filter(child => child.is_deleted).length;

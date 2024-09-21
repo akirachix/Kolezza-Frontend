@@ -10,7 +10,7 @@ const UserRegistration = () => {
  
   return (
     <div>
-       <div className="border-[#90BD31] h-40 text-black flex flex-col w-full font-nunito">
+       <div className="border-customGreen h-40 text-black flex flex-col w-full font-nunito">
        <div className="flex items-center ml-8 top-6">
         <IoIosArrowBack className="text-4xl text-black" />
       </div>

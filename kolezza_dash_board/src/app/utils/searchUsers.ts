@@ -1,4 +1,4 @@
-export const useSearchUsers = async (query: string) => {
+const UseSearchUsers = async (query: string) => {
   try {
     const response = await fetch(`/api/user?query=${encodeURIComponent(query)}`);
     if (!response.ok) {
@@ -11,3 +11,5 @@ export const useSearchUsers = async (query: string) => {
     throw error;
   }
 };
+
+export default UseSearchUsers;

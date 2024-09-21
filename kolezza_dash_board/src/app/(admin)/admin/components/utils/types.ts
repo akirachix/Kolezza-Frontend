@@ -8,12 +8,7 @@ export interface User {
     role: string;
 
 }
-type StatBoxProps = {
-    title: string;
-    value: string;
-    color: string;
-    isNH?: boolean;
-  };
+
 
 export interface UsersFetchSuccessResponse {
     users: User[];

@@ -1,6 +1,6 @@
 
 import Layout from './Layout';
-import Dashboard from './dashboard/page';
+import Dashboard from './components/Dashboard';
 
 export default function Home() {
   return (

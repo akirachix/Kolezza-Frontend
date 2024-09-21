@@ -20,7 +20,7 @@ const Sidebar = () => {
       <nav className="flex-grow ">
         <ul className="space-y-10 ml-6">
           {[
-            { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
+            { name: 'Dashboard', icon: LayoutDashboard, href: '/' ,active: true},
             { name: 'Patients', icon: Users2, href: '/patients' },
             { name: 'Profile', icon: UserCircle, href: '/profile' },
             { name: 'Users', icon: Users, href: 'admin/users' },
@@ -28,15 +28,48 @@ const Sidebar = () => {
             <li key={item.name}>
               <Link 
                 href={item.href} 
-                className="flex items-center px-6 py-3 hover:bg-white hover:text-customDarkBlue transition-colors group"
+                className={`flex items-center px-4 py-3 transition-colors group ${
+                  item.active ? 'bg-white text-customDarkBlue rounded-2xl w-32' : 'hover:bg-white hover:text-customDarkBlue'
+                }`}
               >
-                <item.icon className="mr-4 group-hover:text-green-500" size={24} />
+                <item.icon 
+                  className={`mr-2 ${item.active ? 'text-green-500' : 'group-hover:text-green-500'}`}
+                  size={24} 
+                />
                 <span className="text-lg">{item.name}</span>
               </Link>
             </li>
           ))}
         </ul>
-      </nav>
+      </nav> 
+
+      {/* <nav className="flex-grow -mt-9"> 
+        <ul className="space-y-10 ml-4">
+          {[
+            { name: 'Dashboard', icon: LayoutDashboard, href: '/' },
+            { name: 'Patients', icon: Users2, href: '/patients' },
+            { name: 'Profile', icon: UserCircle, href: '/profile' },
+            { name: 'Users', icon: Users, href:'admin/users', active: true },
+          ].map((item) => (
+            <li key={item.name}>
+              <Link 
+                href={item.href} 
+                className={`flex items-center px-4 py-3 transition-colors group ${
+                  item.active ? 'bg-white text-customDarkBlue rounded-2xl w-32' : 'hover:bg-white hover:text-customDarkBlue'
+                }`}
+              >
+                <item.icon 
+                  className={`mr-2 ${item.active ? 'text-green-500' : 'group-hover:text-green-500'}`}
+                  size={24} 
+                />
+                <span className="text-lg">{item.name}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav> */}
+
+
     </div>
   );
 };
