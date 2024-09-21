@@ -1,6 +1,3 @@
-
-import { LogIn } from "lucide-react";
-import Layout from "./Layout";
 import LoginPage from "./login/page";
 
 
