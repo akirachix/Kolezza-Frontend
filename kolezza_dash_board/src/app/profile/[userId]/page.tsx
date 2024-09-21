@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { FaUser, FaArrowLeft } from "react-icons/fa";
 import { AiOutlineLogout } from "react-icons/ai";
 import { useGetUserProfile } from "@/app/hooks/useGetProfile";
-import Sidebar from "@/app/components/Sidebar";
+import Sidebar from "@/app/(admin)/admin/components/Sidebar";
 
 
 type Params = {

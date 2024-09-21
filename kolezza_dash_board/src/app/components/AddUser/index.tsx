@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { IoIosArrowBack } from "react-icons/io";
 import TherapistRegistration from '../AddTherapist';
-import AdminRegistration from '../AddAdmin';
+import AdminRegistration from '../../(admin)/admin/AddAdmin';
 
 
 const UserRegistration = () => {
