@@ -8,12 +8,12 @@ import useGetChildData from "../../components/hooks/useGetChildData";
 
 const PatientPage = ({ params: { id } }: { params: { id: string } }) => {
   const {
-    childData,
+    
     loading: childLoading,
     error: childError,
   } = useGetChildData(id);
   const {
-    progressData,
+    
     loading: progressLoading,
     error: progressError,
   } = useGetProgressData(id);

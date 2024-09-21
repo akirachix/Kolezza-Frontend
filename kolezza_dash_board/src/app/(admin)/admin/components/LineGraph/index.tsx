@@ -50,7 +50,7 @@ const LineChart = ({ childId }: { childId: string }) => {
     };
 
     fetchProgressDataForChart();
-  }, []);
+  });
 
   const options = {
     scales: {

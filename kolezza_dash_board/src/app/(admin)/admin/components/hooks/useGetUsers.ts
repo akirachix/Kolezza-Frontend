@@ -48,5 +48,5 @@ export const useUsers = () => {
         getUsers();
     }, [currentPage]); // Re-fetch data when currentPage changes
 
-    return { ...state, paginate };
+    return { currentUsers, totalUsers, currentPage, loading, error, paginate };
 };

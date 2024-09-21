@@ -15,7 +15,6 @@ const Sidebar = () => {
     setUserRole(role || null);
     setUserId(id || null);
   }, []);
-
   return (
     <div className="w-64 h-screen bg-customDarkBlue text-white flex flex-col">
       <div className="p-6 mb-8">
@@ -47,6 +46,7 @@ const Sidebar = () => {
             </li>
           ))}
 
+
           {userRole === 'superadmin' && (
             <li>
               <Link 
@@ -60,8 +60,9 @@ const Sidebar = () => {
           )}
         </ul>
       </nav>
+
     </div>
   );
 };
 
-export default Sidebar;
+

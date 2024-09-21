@@ -4,7 +4,8 @@ import { Search, User, Bell, Filter } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Label } from "recharts";
 import { useSearch } from "@/app/hooks/useSearchUsers";
 import { usePatients } from "@/app/hooks/useGetPatients";
-import Layout from "../Layout";
+// import Layout from "../Layout";
+import Layout from "@/app/Layout";
 
 
 interface Patient {
@@ -15,34 +16,28 @@ interface Patient {
   is_new: boolean;
   date_of_registration?: string;
 }
-
 interface ChartData {
   day: string;
   activeUsers: number;
   inactiveUsers: number;
   newUsers: number;
 }
-
 interface FilteredChartData {
   [x: string]: string | number;
   day: string;
 }
-
 const StatCard = ({ title, value, bgColor, textColor = "text-black" }: { title: string; value: number; bgColor: string; textColor?: string }) => (
   <div className={`rounded-lg p-6 ${textColor} ${bgColor} h-40 flex flex-col justify-center items-center shadow-lg text-center`}>
     <h3 className="text-lg font-semibold">{title}</h3>
     <p className="text-4xl font-bold">{value}</p>
   </div>
 );
-
 const Dashboard = () => {
-  const { query, searchResults, loading: searchLoading, error: searchError, handleInputChange, handleKeyPress } = useSearch();
+  const { query, searchResults, fetchLoading: searchLoading, error: searchError, handleInputChange, handleKeyPress } = useSearch();
   const { patients } = usePatients();
-
   const totalPatients: number = patients.length;
   const activePatients: number = patients.filter((patient: Patient) => !patient.is_deleted).length;
   const inactivePatients: number = patients.filter((patient: Patient) => patient.is_deleted).length;
-
   const groupPatientsByDay = (patients: Patient[]): ChartData[] => {
     const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     const dayStats: ChartData[] = days.map((day) => ({
@@ -51,11 +46,9 @@ const Dashboard = () => {
       inactiveUsers: 0,
       newUsers: 0,
     }));
-
     patients.forEach((patient: Patient) => {
       const registrationDay = new Date(patient.date_of_registration || Date.now()).getDay();
       const dayIndex = (registrationDay + 6) % 7;
-
       if (patient.is_new) {
         dayStats[dayIndex].newUsers++;
       }
@@ -65,31 +58,22 @@ const Dashboard = () => {
         dayStats[dayIndex].activeUsers++;
       }
     });
-
     return dayStats;
   };
-
   const chartData: ChartData[] = useMemo(() => groupPatientsByDay(patients), [patients]);
-
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-
   const [data, setData] = useState<ChartData[]>(chartData);
   const [filteredData, setFilteredData] = useState<FilteredChartData[]>([]);
-
   const handleFilter = (filter: string) => {
-    
     setIsFilterOpen(false);
-
     if (filter === "All") {
       setData(chartData);
       setFilteredData([])
-      
     } else if (filter === "activeUsers") {
       const filteredData = chartData.map((item) => ({
         day: item.day,
         activeUsers: item.activeUsers,
-      }));  
-      
+      }));
       setFilteredData(filteredData);
     } else if (filter === "inactiveUsers") {
       const filteredData = chartData.map((item) => ({
@@ -105,13 +89,9 @@ const Dashboard = () => {
       setFilteredData(filteredData);
     }
   };
-
   useEffect(() => {
     setData(chartData);
   }, [chartData]);
-
-  
-
   return (
   <Layout>
       <div className="flex h-screen w-full">
@@ -152,13 +132,11 @@ const Dashboard = () => {
             </button>
           </div>
         </div>
-
         <div className="grid grid-cols-3 gap-6 mb-6">
           <StatCard title="TOTAL PATIENTS" value={totalPatients} bgColor="bg-blue-300 drop-shadow-lg" />
           <StatCard title="ACTIVE PATIENTS" value={activePatients} bgColor="bg-green-500 drop-shadow-lg" />
           <StatCard title="INACTIVE PATIENTS" value={inactivePatients} bgColor="bg-blue-900 drop-shadow-lg" textColor="text-white" />
         </div>
-
         <div className="bg-white p-6 rounded-lg shadow w-full">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">Total Number Of Users</h2>
@@ -191,9 +169,9 @@ const Dashboard = () => {
                 <Label value="Users" angle={-90} position="insideLeft" offset={-5} />
               </YAxis>
               <Tooltip />
-              <Bar dataKey="activeUsers" fill="#1e40af" name="Active Users" barSize={40} />
-              <Bar dataKey="inactiveUsers" fill="#93c5fd" name="Inactive Users" barSize={40} />
-              <Bar dataKey="newUsers" fill="#22c55e" name="New Users" barSize={40} />
+              <Bar dataKey="activeUsers" fill="#1E40AF" name="Active Users" barSize={40} />
+              <Bar dataKey="inactiveUsers" fill="#93C5FD" name="Inactive Users" barSize={40} />
+              <Bar dataKey="newUsers" fill="#22C55E" name="New Users" barSize={40} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -202,5 +180,4 @@ const Dashboard = () => {
   </Layout>
   );
 };
-
 export default Dashboard;

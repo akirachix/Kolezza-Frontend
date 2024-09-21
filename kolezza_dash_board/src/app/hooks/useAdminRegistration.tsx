@@ -1,7 +1,6 @@
-
 import { useState } from 'react';
 import { fetchAdmin } from '../utils/adminPost';
-import { AdminRegistrationData, AdminRegistrationState,UseAdminRegistrationReturn } from '../utils/types';
+import { AdminRegistrationData, AdminRegistrationState, UseAdminRegistrationReturn } from '../utils/types';
 
 export const useAdminRegistration = (): UseAdminRegistrationReturn => {
     const [state, setState] = useState<AdminRegistrationState>({
@@ -11,25 +10,29 @@ export const useAdminRegistration = (): UseAdminRegistrationReturn => {
     });
 
     const registerAdmin = async (data: AdminRegistrationData) => {
-        setState((prev: any) => ({ ...prev, loading: true, errorMessage: '', successMessage: '' }));
+        setState((prev) => ({ ...prev, loading: true, errorMessage: '', successMessage: '' }));
 
         try {
-            const result = await fetchAdmin(data);
-            setState((prev: any) => ({ ...prev, successMessage: 'Registration successful!' }));
+            await fetchAdmin(data); 
+            setState((prev) => ({ ...prev, successMessage: 'Registration successful!' }));
         } catch (error) {
             if (error instanceof Error) {
+                let errorMessage = 'Registration failed. Please try again.';
+                
                 if (error.message.includes('Failed to fetch')) {
-                    setState((prev: any) => ({ ...prev, errorMessage: 'Unable to connect to the server. Please check your internet connection and try again.' }));
+                    errorMessage = 'Unable to connect to the server. Please check your internet connection and try again.';
                 } else if (error.message.includes('Server configuration error')) {
-                    setState((prev: any) => ({ ...prev, errorMessage: 'There is a problem with the server configuration. Please contact support.' }));
+                    errorMessage = 'There is a problem with the server configuration. Please contact support.';
                 } else {
-                    setState((prev: any) => ({ ...prev, errorMessage: (error as Error).message || 'Registration failed. Please try again.' }));
+                    errorMessage = error.message || errorMessage;
                 }
+
+                setState((prev) => ({ ...prev, errorMessage }));
             } else {
-                setState((prev: any) => ({ ...prev, errorMessage: 'An unexpected error occurred. Please try again.' }));
+                setState((prev) => ({ ...prev, errorMessage: 'An unexpected error occurred. Please try again.' }));
             }
         } finally {
-            setState((prev: any) => ({ ...prev, loading: false }));
+            setState((prev) => ({ ...prev, loading: false }));
         }
     };
 
