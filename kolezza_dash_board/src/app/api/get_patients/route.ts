@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { ApiPatient } from "@/app/(admin)/admin/patients/components/utils/types";
+import { ApiPatient } from "@/app/(admin)/admin/components/utils/types";
 
 const baseUrl = process.env.BASE_URL;
 
