@@ -20,7 +20,7 @@ const Sidebar = () => {
       <nav className="flex-grow ">
         <ul className="space-y-10 ml-6">
           {[
-            { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
+            { name: 'Dashboard', icon: LayoutDashboard, href: '/' },
             { name: 'Patients', icon: Users2, href: '/patients' },
             { name: 'Profile', icon: UserCircle, href: '/profile' },
             { name: 'Users', icon: Users, href: '/users' },
@@ -28,7 +28,7 @@ const Sidebar = () => {
             <li key={item.name}>
               <Link 
                 href={item.href} 
-                className="flex items-center px-6 py-3 hover:bg-white hover:text-customDarkBlue transition-colors group"
+                className="flex items-center px-6 py-3 active:bg-white hover:bg-white hover:text-customDarkBlue transition-colors group"
               >
                 <item.icon className="mr-4 group-hover:text-green-500" size={24} />
                 <span className="text-lg">{item.name}</span>

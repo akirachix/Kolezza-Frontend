@@ -111,6 +111,7 @@ const Dashboard = () => {
     <div className="flex h-screen w-full">
       <div className="flex-grow p-6 bg-gray-100 overflow-auto w-full">
         <div className="flex justify-between items-center mb-6">
+          
           <div className="relative flex-grow max-w-md">
             <input
               type="text"
@@ -134,6 +135,7 @@ const Dashboard = () => {
               )}
             </ul>
           </div>
+
           <div className="flex items-center space-x-4">
             <button className="text-gray-600">
               <User size={24} />
