@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Search, Plus } from 'lucide-react'; 
+import { Search} from 'lucide-react'; 
 import Link from 'next/link';
 
 import { useUsers } from '@/app/(admin)/admin/components/hooks/useGetUsers';
@@ -88,15 +88,10 @@ export default function DashboardTable() {
             onChange={(e) => setQuery(e.target.value)}
           />
         </div>
-        <a href="/admin/add-user" className="href">
-          <button
-            className="flex items-center justify-between border border-[#90BD31] rounded-lg bg-white text-black px-4 py-2"
-            style={{ width: '207px', height: '50px' }}
-          >
-            <Plus className="text-[#90BD31]" />
-            <span>Add User</span>
-          </button>
-        </a>
+
+<Link href="/admin/Content" className="border-customGreen border-2 px-4 py-2 mt-3 rounded text-customGreen">
+          User Permissions
+        </Link>
       </div>
 
       <div className={`grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 mb-6 ml-6

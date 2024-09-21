@@ -141,7 +141,7 @@ const TherapistRegistration = () => {
               {...register('username')}
               type="text"
               placeholder="Enter username"
-              className="mt-1 block w-full border-3 border-lightGreen rounded-md shadow-sm pl-10 pr-2 py-4"
+              className="mt-1 block w-full border-3 border-customGreen rounded-md shadow-sm pl-10 pr-2 py-4"
             />
             <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
           </div>

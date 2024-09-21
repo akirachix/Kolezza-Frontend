@@ -1,11 +1,5 @@
 import { useState } from "react";
-// import { fetchTherapist } from '../utils/newTherapistPost';
-import { fetchTherapist } from "../utils/newTherapistPost";
-import {
-  TherapistRegistrationData,
-  TherapistRegistrationState,
-  UseTherapistRegistrationReturn,
-} from "../utils/types";
+import {TherapistRegistrationState, UseTherapistRegistrationReturn } from '../utils/types';
 
 export const useTherapistRegistration = (): UseTherapistRegistrationReturn => {
   const [state, setState] = useState<TherapistRegistrationState>({
@@ -14,8 +8,8 @@ export const useTherapistRegistration = (): UseTherapistRegistrationReturn => {
     successMessage: "",
   });
 
-  const registerTherapist = async (data: TherapistRegistrationData) => {
-    setState((prev: any) => ({
+  const registerTherapist = async () => {
+    setState((prev) => ({
       ...prev,
       loading: true,
       errorMessage: "",
@@ -23,8 +17,7 @@ export const useTherapistRegistration = (): UseTherapistRegistrationReturn => {
     }));
 
     try {
-      const result = await fetchTherapist(data);
-      setState((prev: any) => ({
+      setState((prev) => ({
         ...prev,
         successMessage: "Registration successful!",
       }));
@@ -32,19 +25,19 @@ export const useTherapistRegistration = (): UseTherapistRegistrationReturn => {
       console.error("Registration error:", error);
       if (error instanceof Error) {
         if (error.message.includes("Failed to fetch")) {
-          setState((prev: any) => ({
+          setState((prev) => ({
             ...prev,
             errorMessage:
               "Unable to connect to the server. Please check your internet connection and try again.",
           }));
         } else if (error.message.includes("Server configuration error")) {
-          setState((prev: any) => ({
+          setState((prev) => ({
             ...prev,
             errorMessage:
               "There is a problem with the server configuration. Please contact support.",
           }));
         } else {
-          setState((prev: any) => ({
+          setState((prev) => ({
             ...prev,
             errorMessage:
               (error as Error).message ||
@@ -52,13 +45,13 @@ export const useTherapistRegistration = (): UseTherapistRegistrationReturn => {
           }));
         }
       } else {
-        setState((prev: any) => ({
+        setState((prev) => ({
           ...prev,
           errorMessage: "An unexpected error occurred. Please try again.",
         }));
       }
     } finally {
-      setState((prev: any) => ({ ...prev, loading: false }));
+      setState((prev) => ({ ...prev, loading: false }));
     }
   };
 

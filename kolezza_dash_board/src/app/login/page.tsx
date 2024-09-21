@@ -38,8 +38,8 @@ function LoginPage() {
       const result = await userLogin(data); 
       console.log("Login successful", result);
       setSuccessMessage("Login successful!");
-    } catch (err: any) {
-      setError(err.message || "An unexpected error occurred");
+    } catch (err) {
+      setError((err as Error).message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }

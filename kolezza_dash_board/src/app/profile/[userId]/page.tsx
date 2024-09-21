@@ -4,23 +4,23 @@ import React, { useState } from "react";
 import { FaUser, FaArrowLeft } from "react-icons/fa";
 import { AiOutlineLogout } from "react-icons/ai";
 import { useGetUserProfile } from "@/app/hooks/useGetProfile";
-import { z } from "zod";
 import Sidebar from "@/app/components/Sidebar";
 
-export const schema = z.object({
-  first_name: z.string().min(1, "First name is required"),
-  middle_name: z.string().optional(),
-  last_name: z.string().min(1, "Last name is required"),
-  email: z.string().email("Invalid email format"),
-  phone: z.string().min(10, "Invalid phone number"),
-  hospital: z.string().min(1, "Hospital name is required"),
-  role: z.string().min(1, "Role is required"),
-});
 
 type Params = {
   userId: string;
 };
 
+
+interface ProfileData{
+  first_name: string ,
+  middle_name?: string,
+  last_name: string,
+  email: string,
+  phone: string,
+  hospital: string,
+  role: string,
+}
 const UserProfile = function ({ params: { userId } }: { params: Params }) {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -33,7 +33,7 @@ const UserProfile = function ({ params: { userId } }: { params: Params }) {
     errors,
   } = useGetUserProfile(userId);
 
-  const handleFormSubmit = async (data: any) => {
+  const handleFormSubmit = async (data: ProfileData) => {
     try {
       await onSubmit(data);
       setSuccessMessage("Profile updated successfully!");
