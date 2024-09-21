@@ -1,6 +1,6 @@
 import { RegistrationSuccessResponse, RegistrationErrorResponse, FetchPatientsFunction } from './types';
 
-const fetchPatientsUrl = 'api/get_patients';
+const fetchPatientsUrl = '/api/get_patients';
 
 export const fetchPatients: FetchPatientsFunction = async () => {
   

@@ -1,6 +1,6 @@
 import { PatientRegistrationData, RegistrationSuccessResponse, RegistrationErrorResponse } from './types';
 
-const url = 'api/add_patient';
+const url = '(admin)/api/add_patient';
 
 type FetchPatientsFunction = (data: PatientRegistrationData) => Promise<RegistrationSuccessResponse>;
 

@@ -6,7 +6,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
+import Layout from '@/app/Layout';
+import Link from 'next/link';
 
 type PatientData = {
   patientFirstName: string;
@@ -49,63 +50,45 @@ const AddPatients = () => {
       childmodule_id: data.childmodule_id,
     };
 
-    setFeedback('Patient details have been submitted : ' + JSON.stringify(transformedData));
+    setFeedback('Patient details have been submitted: ' + JSON.stringify(transformedData));
   };
 
   const inputStyle = "w-full w-[400px] h-[80px] nh:w-[205px] nh:h-[60px] border-customGreen border-4 rounded-lg p-2 pl-10 nh:pl-9 placeholder-gray-400";
   const iconStyle = "absolute left-3 top-1/2 transform -translate-y-1/2 text-black";
 
   return (
-    <div className="bg-white">
-      <div className="px-10">
-        <div className="flex items-center mb-6">
-          <ChevronLeft className="w-20 h-10 mr-10" />
-          <h2 className="text-4xl nh:text-2xl  nh:ml-32 ml-96 font-semibold">Add a new Patient</h2>
+    <Layout>
+      <div className="bg-white">
+        <div className="px-10">
+          <Link href="/admin/PatientList/">
+            <ChevronLeft className="w-20 h-10 mr-10 cursor-pointer" />
+          </Link>
+          <h2 className="text-4xl nh:text-2xl nh:ml-32 ml-96 font-semibold">Add a new Patient</h2>
         </div>
+
         {feedback && <p className="text-green-500">{feedback}</p>}
+
         <form onSubmit={handleSubmit(onSubmit)} className="mt-10 nh:mt-2">
           <div className="flex mb-4 space-x-4 nh:gap-6 nh:mb-0.5 nh:mr-9">
-            <div className="flex-1">
-              <label className="block font-medium mb-2 text-[20px]">Patient First Name</label>
-              <div className="relative mb-4 nh:text-[15px] text-[20px]">
-                <User className={iconStyle} />
-                <input
-                  type="text"
-                  placeholder="Enter First Name"
-                  className={inputStyle}
-                  {...register('patientFirstName')}
-                />
-                {errors.patientFirstName && <p className="text-red-500">{errors.patientFirstName.message}</p>}
+            {['First', 'Middle', 'Last'].map((name) => (
+              <div key={name} className="flex-1">
+                <label className={`block font-medium mb-2 text-[20px]`}>
+                  Patient {name} Name
+                </label>
+                <div className="relative mb-4 nh:text-[15px] text-[20px]">
+                  <User className={iconStyle} />
+                  <input
+                    type="text"
+                    placeholder={`Enter ${name} Name`}
+                    className={inputStyle}
+                    {...register(`patient${name}Name`)}
+                  />
+                  {errors[`patient${name}Name`] && (
+                    <p className="text-red-500">{errors[`patient${name}Name`].message}</p>
+                  )}
+                </div>
               </div>
-            </div>
-
-            <div className="flex-1">
-              <label className="block font-medium mb-2 text-[20px]">Patient Middle Name</label>
-              <div className="relative mb-4 nh:text-[15px] text-[20px]">
-                <User className={iconStyle} />
-                <input
-                  type="text"
-                  placeholder="Enter Middle Name"
-                  className={inputStyle}
-                  {...register('patientMiddleName')}
-                />
-                {errors.patientMiddleName && <p className="text-red-500">{errors.patientMiddleName.message}</p>}
-              </div>
-            </div>
-
-            <div className="flex-1">
-              <label className="block font-medium mb-2 text-[20px]">Patient Last Name</label>
-              <div className="relative nh:text-[15px] mb-4 text-[20px]">
-                <User className={iconStyle} />
-                <input
-                  type="text"
-                  placeholder="Enter Last Name"
-                  className={inputStyle}
-                  {...register('patientLastName')}
-                />
-                {errors.patientLastName && <p className="text-red-500">{errors.patientLastName.message}</p>}
-              </div>
-            </div>
+            ))}
           </div>
 
           <label className="block font-medium mb-2 text-[20px]">Date of Birth</label>
@@ -131,7 +114,6 @@ const AddPatients = () => {
                 }}
                 placeholderText="Select your date of birth"
                 className="absolute z-10"
-                onClickOutside={() => setCalendarOpen(false)}
                 inline
               />
             )}
@@ -140,60 +122,48 @@ const AddPatients = () => {
 
           <div>
             <label className="block font-medium mb-2 text-[20px]">Gender</label>
-            <div className="flex gap-[990px] nh:w-[708px] nh:gap-[450px] nh:h-[60px] items-center border-4 p-4 rounded-lg border-customGreen">
-              <label className="flex  items-center cursor-pointer mr-8">
-                <input
-                  type="radio"
-                  value="female"
-                  className="hidden"
-                  {...register('gender')}
-                />
-                <span className={` nh:w-8 nh:h-8 w-10 h-10 mr-2 border border-gray-400 rounded-full relative flex items-center justify-center`}>
-                  <span className={`w-6 h-6 rounded-full bg-black ${watch('gender') === 'female' ? '' : 'hidden'}`} />
-                </span>
-                <span className='text-gray-400 nh:text-[15px] text-xl'>Female</span>
-              </label>
-              <label className="flex items-center cursor-pointer">
-                <input
-                  type="radio"
-                  value="male"
-                  className="hidden"
-                  {...register('gender')}
-                />
-                <span className={` nh:w-8 nh:h-8 w-10 h-10 mr-2 border border-gray-400 rounded-full relative flex items-center justify-center`}>
-                  <span className={`w-6 h-6 rounded-full bg-black ${watch('gender') === 'male' ? '' : 'hidden'}`} />
-                </span>
-                <span className='text-gray-400 nh:text-[15px] text-xl'>Male</span>
-              </label>
+            <div className="flex gap-[990px] nh:w-[708px] nh:gap-[450px] nh:h-[60px] items-center border-4 p-4 rounded-lg border-lightGreen">
+              {['female', 'male'].map((gender) => (
+                <label key={gender} className="flex items-center cursor-pointer">
+                  <input
+                    type="radio"
+                    value={gender}
+                    className="hidden"
+                    {...register('gender')}
+                  />
+                  <span className={`nh:w-8 nh:h-8 w-10 h-10 mr-2 border border-gray-400 rounded-full relative flex items-center justify-center`}>
+                    <span className={`w-6 h-6 rounded-full bg-black ${watch('gender') === gender ? '' : 'hidden'}`} />
+                  </span>
+                  <span className='text-gray-400 nh:text-[15px] text-xl'>{gender.charAt(0).toUpperCase() + gender.slice(1)}</span>
+                </label>
+              ))}
             </div>
             {errors.gender && <p className="text-red-500">{errors.gender.message}</p>}
           </div>
 
-          <div className="flex mt-10 nh:mt-5 items-center  mb-4 space-x-4">
+          <div className="flex mt-10 nh:mt-5 items-center mb-4 space-x-4">
+            {/* Level of Stuttering */}
             <div className="flex-1">
               <label className="block text-xl font-medium mb-2">Level of Stuttering</label>
               <select
-                className={`w-full max-w-[800px] nh:w-[325px] nh:h-[60px] h-[80px] border-[4px] border-customGreen rounded-lg p-3 text-lg ${errors.levelOfStutteringId ? 'border-red-500' : ''}`}
+                className={`w-full max-w-[800px] nh:w-[325px] nh:h-[60px] h-[80px] border-[4px] border-lightGreen rounded-lg p-3 text-lg ${errors.levelOfStutteringId ? 'border-red-500' : ''}`}
                 {...register('levelOfStutteringId')}
               >
                 <option value="">Select Level of Stuttering</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
+                {[1, 2, 3].map(level => <option key={level} value={level}>{level}</option>)}
               </select>
               {errors.levelOfStutteringId && <p className="text-red-500 text-sm">{errors.levelOfStutteringId.message}</p>}
             </div>
 
+            {/* Child Module ID */}
             <div className="flex-1 -nh:ml-10">
               <label className="block text-xl font-medium mb-2">Child Module ID</label>
               <select
-                className={`w-full max-w-[800px] nh:w-[325px] nh:h-[60px] h-[80px] border-[4px] border-customGreen rounded-lg p-3 text-lg ${errors.childmodule_id ? 'border-red-500' : ''}`}
+                className={`w-full max-w-[800px] nh:w-[325px] nh:h-[60px] h-[80px] border-[4px] border-lightGreen rounded-lg p-3 text-lg ${errors.childmodule_id ? 'border-red-500' : ''}`}
                 {...register('childmodule_id')}
               >
                 <option value="">Select Child Module ID</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
+                {[1, 2, 3].map(id => <option key={id} value={id}>{id}</option>)}
               </select>
               {errors.childmodule_id && <p className="text-red-500 text-sm">{errors.childmodule_id.message}</p>}
             </div>
@@ -206,7 +176,7 @@ const AddPatients = () => {
           </div>
         </form>
       </div>
-    </div>
+    </Layout>
   );
 };
 
