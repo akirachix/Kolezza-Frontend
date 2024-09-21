@@ -1,6 +1,4 @@
 import { useState } from "react";
-// import { useSearchUsers } from "@/app/utils/searchUsers";
-// import UseSearchUsers from "../utils/searchUsers";
 import UseSearchUsers from "../utils/searchUsers";
 
 export const useSearch = () => {
@@ -22,9 +20,9 @@ export const useSearch = () => {
   };
 
   const handleKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
-      await performSearch(); 
+      await performSearch();
     }
   };
 

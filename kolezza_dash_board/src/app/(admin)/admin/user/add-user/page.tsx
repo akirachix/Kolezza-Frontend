@@ -1,7 +1,5 @@
-// import UserRegistration from "@/app/components/AddUser";
-// import Layout from "@/app/Layout";
 import UserRegistration from "@/app/components/AddUser";
-import Layout from "@/app/Layout";
+import Layout from "../../components/Layout";
 
 const AddUser = () => {
     return(

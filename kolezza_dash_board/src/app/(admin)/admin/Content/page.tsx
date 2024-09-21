@@ -1,4 +1,4 @@
-import Layout from "@/app/Layout";
+import Layout from "../components/Layout";
 import DashboardContent from "../components/Content";
 
 const AddUser = () => {
