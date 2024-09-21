@@ -4,6 +4,8 @@ import { Search, User, Bell, Filter } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Label } from "recharts";
 import { useSearch } from "@/app/hooks/useSearchUsers";
 import { usePatients } from "@/app/hooks/useGetPatients";
+import Layout from "../Layout";
+
 
 interface Patient {
   id: number;
@@ -35,7 +37,7 @@ const StatCard = ({ title, value, bgColor, textColor = "text-black" }: { title: 
 
 const Dashboard = () => {
   const { query, searchResults, loading: searchLoading, error: searchError, handleInputChange, handleKeyPress } = useSearch();
-  const { patients, loading: patientsLoading, error: patientsError } = usePatients();
+  const { patients } = usePatients();
 
   const totalPatients: number = patients.length;
   const activePatients: number = patients.filter((patient: Patient) => !patient.is_deleted).length;
@@ -70,17 +72,18 @@ const Dashboard = () => {
   const chartData: ChartData[] = useMemo(() => groupPatientsByDay(patients), [patients]);
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [activeFilter, setActiveFilter] = useState("All");
+
   const [data, setData] = useState<ChartData[]>(chartData);
   const [filteredData, setFilteredData] = useState<FilteredChartData[]>([]);
 
   const handleFilter = (filter: string) => {
-    setActiveFilter(filter);
+    
     setIsFilterOpen(false);
 
     if (filter === "All") {
       setData(chartData);
-      setFilteredData([]);
+      setFilteredData([])
+      
     } else if (filter === "activeUsers") {
       const filteredData = chartData.map((item) => ({
         day: item.day,
@@ -107,8 +110,11 @@ const Dashboard = () => {
     setData(chartData);
   }, [chartData]);
 
+  
+
   return (
-    <div className="flex h-screen w-full">
+  <Layout>
+      <div className="flex h-screen w-full">
       <div className="flex-grow p-6 bg-gray-100 overflow-auto w-full">
         <div className="flex justify-between items-center mb-6">
           
@@ -193,6 +199,7 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
+  </Layout>
   );
 };
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSearchUsers } from "@/app/utils/searchUsers";
+import { useSearchUsers } from "../utils/searchUsers";
 
 export const useSearch = () => {
   const [query, setQuery] = useState("");
@@ -20,9 +20,9 @@ export const useSearch = () => {
   };
 
   const handleKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
-      await performSearch(); 
+      await performSearch();
     }
   };
 
