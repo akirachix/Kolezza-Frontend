@@ -137,13 +137,11 @@ export default function DashboardTable() {
             {filteredUsers.length > 0 ? (
               filteredUsers.map((user, index) => (
                 <tr key={index} className={index % 2 === 0 ? 'bg-[#D9D9D9]' : 'bg-white'}>
-                  <Link href={`/admin/patient/${user.id}`} className="contents">
                     <td className="px-4 py-4 text-center">{user.id}</td>
                     <td className="px-4 py-4 text-center">{user.username}</td>
                     <td className="px-4 py-4 text-center">{user.email || '-'}</td>
                     <td className="px-4 py-4 text-center">{user.first_name}</td>
                     <td className="px-4 py-4 text-center">{user.role}</td>
-                  </Link>
                 </tr>
               ))
             ) : (

@@ -35,7 +35,7 @@ const StatCard = ({ title, value, bgColor, textColor = "text-black" }: { title: 
 
 const Dashboard = () => {
   const { query, searchResults, loading: searchLoading, error: searchError, handleInputChange, handleKeyPress } = useSearch();
-  const { patients, loading: patientsLoading, error: patientsError } = usePatients();
+  const { patients } = usePatients();
 
   const totalPatients: number = patients.length;
   const activePatients: number = patients.filter((patient: Patient) => !patient.is_deleted).length;
@@ -70,17 +70,18 @@ const Dashboard = () => {
   const chartData: ChartData[] = useMemo(() => groupPatientsByDay(patients), [patients]);
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [activeFilter, setActiveFilter] = useState("All");
+
   const [data, setData] = useState<ChartData[]>(chartData);
   const [filteredData, setFilteredData] = useState<FilteredChartData[]>([]);
 
   const handleFilter = (filter: string) => {
-    setActiveFilter(filter);
+    
     setIsFilterOpen(false);
 
     if (filter === "All") {
       setData(chartData);
-      setFilteredData([]);
+      setFilteredData([])
+      
     } else if (filter === "activeUsers") {
       const filteredData = chartData.map((item) => ({
         day: item.day,
@@ -106,6 +107,8 @@ const Dashboard = () => {
   useEffect(() => {
     setData(chartData);
   }, [chartData]);
+
+  
 
   return (
     <div className="flex h-screen w-full">

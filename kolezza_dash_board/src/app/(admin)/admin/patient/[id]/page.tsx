@@ -1,15 +1,22 @@
-'use client';
-import React from 'react';
-import useGetProgressData from '../../components/hooks/useGetChildProgressData';
-import LineChart from '../../components/LineGraph';
-import Layout from '../../../../Layout';
-import PatientDetails from '@/app/components/PatientDetails';
-import useGetChildData from '../../components/hooks/useGetChildData';
-
+"use client";
+import React from "react";
+import useGetProgressData from "../../components/hooks/useGetChildProgressData";
+import LineChart from "../../components/LineGraph";
+import Layout from "../../patients/components/Layout";
+import PatientDetails from "@/app/components/PatientDetails";
+import useGetChildData from "../../components/hooks/useGetChildData";
 
 const PatientPage = ({ params: { id } }: { params: { id: string } }) => {
-  const { childData, loading: childLoading, error: childError } = useGetChildData(id);
-  const { progressData, loading: progressLoading, error: progressError } = useGetProgressData(id);
+  const {
+    childData,
+    loading: childLoading,
+    error: childError,
+  } = useGetChildData(id);
+  const {
+    progressData,
+    loading: progressLoading,
+    error: progressError,
+  } = useGetProgressData(id);
 
   if (childLoading || progressLoading) {
     return <div>Loading...</div>;
@@ -24,17 +31,17 @@ const PatientPage = ({ params: { id } }: { params: { id: string } }) => {
   }
 
   return (
-  <Layout>
-     <div className="patient-dashboard">
-      <div className="patient-details-section mb-10">
-        <PatientDetails childId={id} />
-      </div>
+    <Layout>
+      <div className="patient-dashboard">
+        <div className="patient-details-section mb-10">
+          <PatientDetails childId={id} />
+        </div>
 
-      <div className='ml-[20rem]'>
-        <LineChart childId={id} />
+        <div className="ml-[20rem]">
+          <LineChart childId={id} />
+        </div>
       </div>
-    </div>
-  </Layout>
+    </Layout>
   );
 };
 

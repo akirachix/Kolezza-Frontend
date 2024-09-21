@@ -17,13 +17,13 @@ const Sidebar = () => {
           />
         </div>
       </div>
-      <nav className="flex-grow -mt-9"> {/* Added margin-top here */}
+      <nav className="flex-grow -mt-9 nh:w-6 "> 
         <ul className="space-y-10 ml-4">
           {[
-            { name: 'Dashboard', icon: LayoutDashboard, href: '/' },
-            { name: 'Patients', icon: Users2, href: 'admin/patient/1' },
-            { name: 'Profile', icon: UserCircle, href: '/profile' },
-            { name: 'Users', icon: Users, href:'admin/users', active: true }, // Mark Users as active
+            { name: 'Dashboard', icon: LayoutDashboard, href: '/', active: true },
+            { name: 'Patients', icon: Users2, href: 'admin/patientsdetails' },
+            { name: 'Profile', icon: UserCircle, href: 'admin/profile' },
+            { name: 'Users', icon: Users, href:'admin/users'}, 
           ].map((item) => (
             <li key={item.name}>
               <Link 

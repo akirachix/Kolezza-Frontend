@@ -1,15 +1,14 @@
-'use client';
+"use client";
 
-import Layout from './Layout';
-import Dashboard from './dashboard/page';
+import Layout from "./(admin)/admin/patients/components/Layout";
+import Dashboard from "./dashboard/page";
 
 export default function Home() {
-  
   return (
     <div>
-    <Layout>
-      <Dashboard/>
-    </Layout>
+      <Layout>
+        <Dashboard />
+      </Layout>
     </div>
   );
 }
