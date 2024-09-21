@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { LayoutDashboard, Users2, UserCircle, Users } from 'lucide-react';
 
 const Sidebar = () => {
-return (
+  return (
     <div className="w-64 h-screen bg-customDarkBlue text-white flex flex-col">
       <div className="p-6 mb-8">
         <div className="flex items-center mb-2 mt-7 ml-5">
@@ -20,9 +20,9 @@ return (
         <ul className="space-y-10 ml-6">
           {[
             { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
-            { name: 'Patients', icon: Users2, href: '/patients' },
-            { name: 'Profile', icon: UserCircle, href: `./profile` },
-            { name: 'Users', icon: Users, href: '/users' },
+            { name: 'Patients', icon: Users2, href: 'admin/patient_page' },
+            { name: 'Profile', icon: UserCircle, href: '/profile' },
+            { name: 'Users', icon: Users, href: 'admin/users' },
           ].map((item) => (
             <li key={item.name}>
               <Link 
