@@ -19,7 +19,7 @@ const useGetProgressData = (childId: string) => {
     };
 
     getProgressData();
-  });
+  },[]);
 
   return { progressData, loading, error };
 };

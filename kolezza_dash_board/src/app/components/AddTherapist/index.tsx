@@ -11,7 +11,6 @@ import { TherapistRegistrationData } from '@/app/utils/types';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Schema for form validation
 const therapistSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
@@ -58,7 +57,6 @@ const TherapistRegistration = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="mt-24 p-8 space-y-6 font-nunito">
-        {/* First Name and Last Name */}
         <div className="flex space-x-4">
           <div className="flex-1 relative">
             <label className="block text-lg font-medium mb-1">First Name</label>
@@ -103,7 +101,6 @@ const TherapistRegistration = () => {
           {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
         </div>
 
-        {/* Hospital Name and Phone Number */}
         <div className="flex space-x-4">
           <div className="flex-1 relative">
             <label className="block text-lg font-medium mb-1">Hospital Name</label>
@@ -133,7 +130,6 @@ const TherapistRegistration = () => {
           </div>
         </div>
 
-        {/* Username */}
         <div className="relative">
           <label className="block text-lg font-medium mb-1">Username</label>
           <div className="relative">
@@ -148,7 +144,6 @@ const TherapistRegistration = () => {
           {errors.username && <p className="text-red-500 text-xs mt-1">{errors.username.message}</p>}
         </div>
 
-        {/* Password and Confirm Password */}
         <div className="flex space-x-4">
           <div className="flex-1 relative">
             <label className="block text-lg font-medium mb-1">Password</label>

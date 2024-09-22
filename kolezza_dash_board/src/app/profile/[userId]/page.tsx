@@ -44,12 +44,9 @@ const UserProfile = function ({ params: { userId } }: { params: Params }) {
 
   return (
     <div className="flex h-screen">
-      {/* Sidebar */}
       <Sidebar/>
 
-      {/* Profile Content */}
       <div className="flex-1 bg-white p-10 overflow-y-auto">
-        {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <FaArrowLeft size={30} className="cursor-pointer" />
           <AiOutlineLogout size={30} className="cursor-pointer" />
@@ -57,17 +54,14 @@ const UserProfile = function ({ params: { userId } }: { params: Params }) {
 
         <h1 className="text-4xl font-bold mb-8 text-center">User Profile</h1>
 
-        {/* Profile Picture */}
         <div className="flex items-center mb-8 justify-center relative">
           <div className="bg-[#90BD31] rounded-full w-[210px] h-[210px] flex items-center justify-center mr-2 relative">
             <FaUser size={80} color="#fff" />
           </div>
         </div>
 
-        {/* Profile Form */}
         <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-12">
           <div className="grid grid-cols-3 gap-x-6 gap-y-6">
-            {/* First Name */}
             <div className="space-y-2">
               <label htmlFor="first_name" className="text-lg font-medium">
                 First Name
@@ -86,7 +80,6 @@ const UserProfile = function ({ params: { userId } }: { params: Params }) {
               )}
             </div>
 
-            {/* Middle Name */}
             <div className="space-y-2">
               <label htmlFor="middle_name" className="text-lg font-medium">
                 Middle Name
@@ -100,7 +93,6 @@ const UserProfile = function ({ params: { userId } }: { params: Params }) {
               />
             </div>
 
-            {/* Last Name */}
             <div className="space-y-2">
               <label htmlFor="last_name" className="text-lg font-medium">
                 Last Name
@@ -158,7 +150,6 @@ const UserProfile = function ({ params: { userId } }: { params: Params }) {
             </div>
           </div>
 
-          {/* Hospital and Role */}
           <div className="grid grid-cols-2 gap-x-6 gap-y-6">
             <div className="space-y-2">
               <label htmlFor="hospital" className="text-lg font-medium">
@@ -197,7 +188,6 @@ const UserProfile = function ({ params: { userId } }: { params: Params }) {
             </div>
           </div>
 
-          {/* Submit Button */}
           <div className="flex justify-center mt-6">
             <button
               type="submit"
@@ -209,10 +199,8 @@ const UserProfile = function ({ params: { userId } }: { params: Params }) {
           </div>
         </form>
 
-        {/* Error Message */}
         {error && <p className="text-red-500 text-center mt-4">{error}</p>}
 
-        {/* Success Message */}
         {successMessage && (
           <p className="text-green-500 text-center mt-4">{successMessage}</p>
         )}

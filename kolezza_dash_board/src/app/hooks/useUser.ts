@@ -27,7 +27,7 @@ export const useUser = () => {
     };
 
     fetchUser();
-  }),[];
+  },[]);
 
   return { user, loading };
 };

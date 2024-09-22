@@ -14,13 +14,13 @@ interface Patient {
 
 const useGetChildData = (childId: string) => {
   const [childData, setChildData] = useState<Patient>({
-    id: 0,
-    first_name: '',
-    last_name: '',
-    is_deleted: false,
-    is_new: false,
-    date_of_birth: '',
-    childModule_id: ''
+    id:0,
+    first_name:'',
+    last_name:'',
+    is_deleted:false,
+    is_new:false,
+    date_of_birth:new Date().toISOString(),
+    childModule_id:''
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -38,7 +38,7 @@ const useGetChildData = (childId: string) => {
     };
 
     getChildData();
-  }, [childId]); 
+  }, []); 
 
   return { childData, loading, error };
 };

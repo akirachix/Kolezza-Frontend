@@ -47,7 +47,7 @@ export const useGetUserProfile = (userId: string) => {
       }
     };
     fetchProfile();
-  }),[];
+  },[]);
 
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 

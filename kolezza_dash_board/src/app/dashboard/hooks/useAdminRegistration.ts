@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { fetchAdmin } from '@/app/utils/adminPost';
-// import { AdminRegistrationData, AdminRegistrationState, UseAdminRegistrationReturn } from '../utils/types';
 import { AdminRegistrationData, AdminRegistrationState,UseAdminRegistrationReturn } from '@/app/utils/types';
 
 export const useAdminRegistration = (): UseAdminRegistrationReturn => {

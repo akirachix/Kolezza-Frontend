@@ -11,7 +11,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-// Schema for form validation
 const adminSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
@@ -63,7 +62,6 @@ const AdminRegistration = () => {
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       {successMessage && <p className="text-green-500">{successMessage}</p>}
 
-      {/* First Name and Last Name */}
       <div className="flex space-x-4 ">
         <div className="flex-1 relative">
           <label className="block text-lg font-medium mb-1">First Name</label>
@@ -93,7 +91,6 @@ const AdminRegistration = () => {
         </div>
       </div>
 
-      {/* Email */}
       <div className="relative">
         <label className="block text-lg font-medium mb-1">Email</label>
         <div className="relative">
@@ -108,7 +105,6 @@ const AdminRegistration = () => {
         {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
       </div>
 
-      {/* Username */}
       <div className="relative">
         <label className="block text-lg font-medium mb-1">Username</label>
         <div className="relative">
@@ -123,7 +119,6 @@ const AdminRegistration = () => {
         {errors.username && <p className="text-red-500 text-xs mt-1">{errors.username.message}</p>}
       </div>
 
-      {/* Password and Confirm Password */}
       <div className="flex space-x-4">
         <div className="flex-1 relative">
           <label className="block text-lg font-medium mb-1">Password</label>
