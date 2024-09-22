@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import { Search, Plus } from "lucide-react";
-import useFetchPatients from "../components/hooks/useFetchPatients";
-import { FetchedPatient } from "../components/utils/types";
+import useFetchPatients from "../hooks/useFetchPatients";
+import { FetchedPatient } from "../utils/types";
 import Link from "next/link";
 import Layout from "@/app/Layout";
 

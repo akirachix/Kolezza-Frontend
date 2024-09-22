@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useUser = () => {
+export const useUser = () => {
   const [user, setUser] = useState<{ username: string; role: string } | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -27,7 +27,7 @@ const useUser = () => {
     };
 
     fetchUser();
-  }, []);
+  }),[];
 
   return { user, loading };
 };

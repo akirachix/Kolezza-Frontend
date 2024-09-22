@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { IoMdCheckboxOutline } from "react-icons/io";
-import useGetUsersData from "../hooks/useGetUsersDashboard";
+import useGetUsersData from "@/app/hooks/useGetUsersDashboard";
 
 type UserRole = "speech_therapist" | "superadmin";
 

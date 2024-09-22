@@ -1,41 +1,31 @@
 import {
-  PatientRegistrationData,
   RegistrationSuccessResponse,
   RegistrationErrorResponse,
+  FetchPatientsFunction,
 } from "./types";
 
-const url = "(admin)/api/add_patient";
+const fetchPatientsUrl = "/api/get_patients";
 
-type FetchPatientsFunction = (
-  data: PatientRegistrationData
-) => Promise<RegistrationSuccessResponse>;
-
-export const fetchPatient: FetchPatientsFunction = async (
-  data: PatientRegistrationData
-) => {
+export const fetchPatients: FetchPatientsFunction = async () => {
   try {
-    const response = await fetch(url, {
-      method: "POST",
+    const response = await fetch(fetchPatientsUrl, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
     });
-
     const responseData:
       | RegistrationSuccessResponse
       | RegistrationErrorResponse = await response.json();
-
     if (!response.ok) {
       throw new Error(
         (responseData as RegistrationErrorResponse).error ||
-          "Registration Failed"
+          "Failed to fetch patients"
       );
     }
-
     return responseData as RegistrationSuccessResponse;
   } catch (error) {
-    console.error("Error fetching patient:", error);
+    console.error("Error fetching patients:", error);
     throw error;
   }
 };

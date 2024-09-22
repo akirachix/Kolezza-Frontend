@@ -1,8 +1,7 @@
-'use client';
-
+"use client";
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import fetchProgressData from '../utils/fetchProgressData';
+import fetchProgressData from '@/app/utils/fetchProgressData';
 import 'chart.js/auto';
 
 const Line = dynamic(() => import('react-chartjs-2').then((mod) => mod.Line), {
@@ -50,7 +49,7 @@ const LineChart = ({ childId }: { childId: string }) => {
     };
 
     fetchProgressDataForChart();
-  });
+  }),[];
 
   const options = {
     scales: {

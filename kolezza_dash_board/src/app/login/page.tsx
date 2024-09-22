@@ -41,7 +41,7 @@ function LoginPage() {
         router.push("/dashboard");
       }
     }
-  }, [router]); 
+  }),[]; 
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 

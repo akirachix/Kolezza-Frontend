@@ -4,7 +4,6 @@ import { Search, User, Bell, Filter } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Label } from "recharts";
 import { useSearch } from "@/app/hooks/useSearchUsers";
 import { usePatients } from "@/app/hooks/useGetPatients";
-// import Layout from "../Layout";
 import Layout from "@/app/Layout";
 
 
@@ -91,7 +90,7 @@ const Dashboard = () => {
   };
   useEffect(() => {
     setData(chartData);
-  }, [chartData]);
+  },[chartData]);
   return (
   <Layout>
       <div className="flex h-screen w-full">

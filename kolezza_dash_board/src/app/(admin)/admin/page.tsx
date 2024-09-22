@@ -3,9 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { Search} from 'lucide-react'; 
 import Link from 'next/link';
-
-import { useUsers } from '@/app/(admin)/admin/components/hooks/useGetUsers';
-import { useChildren } from '@/app/(admin)/admin/components/hooks/useGetChildren';
+import { useChildren } from '@/app/hooks/useGetChildren';
+import { useUsers } from '@/app/hooks/useGetUsers';
 
 type StatBoxProps = {
   title: string;

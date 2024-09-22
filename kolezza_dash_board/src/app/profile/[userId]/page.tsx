@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { FaUser, FaArrowLeft } from "react-icons/fa";
 import { AiOutlineLogout } from "react-icons/ai";
 import { useGetUserProfile } from "@/app/hooks/useGetProfile";
-import Sidebar from "@/app/(admin)/admin/components/Sidebar";
+import Sidebar from "@/app/Sidebar";
 
 
 type Params = {
@@ -120,7 +120,6 @@ const UserProfile = function ({ params: { userId } }: { params: Params }) {
             </div>
           </div>
 
-          {/* Email and Phone */}
           <div className="grid grid-cols-2 gap-x-6 gap-y-6">
             <div className="space-y-2">
               <label htmlFor="email" className="text-lg font-medium">
