@@ -1,11 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { setCookie, getCookie } from "cookies-next"; 
+import { useRouter } from "next/navigation"; 
 import Image from "next/image";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { userLogin } from "../utils/fetchLogin";
+import { userLogin } from "../utils/fetchLogin"; 
 
 const schema = z.object({
   username: z.string().min(4, "Username must be at least 4 characters"),
@@ -26,6 +28,20 @@ function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter(); 
+
+  useEffect(() => {
+   
+    const token = getCookie('token');
+    if (token) {
+      const role = getCookie("userRole");
+      if (role === "admin") {
+        router.push("/admin");
+      } else {
+        router.push("/dashboard");
+      }
+    }
+  },[]); 
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
@@ -36,8 +52,25 @@ function LoginPage() {
 
     try {
       const result = await userLogin(data); 
-      console.log("Login successful", result);
-      setSuccessMessage("Login successful!");
+      console.log({result});
+      
+
+      if (result?.access_token) {
+        setCookie("token", result.access_token, { maxAge: 60 * 60 * 24 }); 
+        setCookie("userRole", result.role, { maxAge: 60 * 60 * 24 }); 
+        setCookie('userId', result.userId)
+
+        setSuccessMessage("Login successful!");
+
+        const role = result.role;
+        if (role === "admin") {
+          router.push("/admin");
+        } else {
+          router.push("/dashboard");
+        }
+      } else {
+        setError("Login failed. Please try again.");
+      }
     } catch (err) {
       setError((err as Error).message || "An unexpected error occurred");
     } finally {
@@ -46,26 +79,22 @@ function LoginPage() {
   };
 
   const googleSignIn = () => {
-    const googleOAuthUrl =
-    "/api/auth/login"
+    const googleOAuthUrl = "/api/auth/login"; 
     window.location.href = googleOAuthUrl;
   };
 
   return (
     <div className="flex h-screen">
-      {/* Left Section */}
       <div className="w-1/2 bg-indigo-950 flex flex-col items-center justify-center">
         <div className="mb-8">
           <Image src="/images/sawatok.png" alt="SawaTok Logo" width={500} height={400} />
         </div>
       </div>
 
-      {/* Right Section */}
       <div className="w-1/2 bg-white flex flex-col items-center justify-center px-12 py-10">
         <h1 className="text-4xl font-bold mb-8 text-gray-800">Login</h1>
         <div className="w-full max-w-sm">
           <form onSubmit={handleSubmit(onSubmit)}>
-            {/* Username Field */}
             <div className="mb-8 relative">
               <label htmlFor="username" className="block text-gray-700 font-semibold mb-2 text-lg">
                 Username
@@ -88,7 +117,6 @@ function LoginPage() {
               )}
             </div>
 
-            {/* Password Field */}
             <div className="mb-8 relative">
               <label htmlFor="password" className="block text-gray-700 font-semibold mb-2 text-lg">
                 Password
@@ -126,11 +154,9 @@ function LoginPage() {
               )}
             </div>
 
-            {/* Error and Success Messages */}
             {error && <p className="text-red-500 mb-4">{error}</p>}
             {successMessage && <p className="text-green-500 mb-4">{successMessage}</p>}
 
-            {/* Submit Button */}
             <button
               type="submit"
               className={`w-full px-4 py-4 mb-4 ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-indigo-900 hover:bg-indigo-700"} text-white font-bold rounded-lg text-lg`}
@@ -144,7 +170,6 @@ function LoginPage() {
             <h1 className="text-lg ">OR</h1>
           </div>
 
-          {/* Google Sign In Button */}
           <div className="flex justify-center">
             <button
               onClick={googleSignIn}

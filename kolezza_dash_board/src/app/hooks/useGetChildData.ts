@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import fetchChildData from '../utils/fetchPatientData';
 
-
 interface Patient {
   id: number;
   first_name: string;
@@ -9,8 +8,8 @@ interface Patient {
   is_deleted: boolean;
   is_new: boolean;
   date_of_registration?: string;
-  date_of_birth:Date;
-  childModule_id:string;
+  date_of_birth: string;
+  childModule_id: string;
 }
 
 const useGetChildData = (childId: string) => {
@@ -20,7 +19,7 @@ const useGetChildData = (childId: string) => {
     last_name:'',
     is_deleted:false,
     is_new:false,
-    date_of_birth:new Date(),
+    date_of_birth:new Date().toISOString(),
     childModule_id:''
   });
   const [loading, setLoading] = useState(true);
@@ -30,7 +29,6 @@ const useGetChildData = (childId: string) => {
     const getChildData = async () => {
       try {
         const data = await fetchChildData(childId);
-        
         setChildData(data);
       } catch (err) {
         setError('Failed to fetch child data');
@@ -40,12 +38,9 @@ const useGetChildData = (childId: string) => {
     };
 
     getChildData();
-  });
+  }, []); 
 
   return { childData, loading, error };
 };
 
 export default useGetChildData;
-
-
-

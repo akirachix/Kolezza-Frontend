@@ -1,4 +1,4 @@
-import Layout from "../components/Layout";
+import Layout from "@/app/Layout";
 import DashboardTable from "../page";
 
 const Users = () => {

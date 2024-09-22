@@ -13,6 +13,8 @@
     "@hookform/resolvers": "^3.9.0",
     "axios": "^1.7.7",
     "chart.js": "^4.4.4",
+    "cookies-next": "^4.2.1",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.441.0",
     "next": "14.2.11",
     "react": "^18.3.1",

@@ -1,7 +1,7 @@
 import { IoIosArrowBack } from 'react-icons/io';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import useGetChildData from '@/app/(admin)/admin/components/hooks/useGetChildData';
+import useGetChildData from '@/app/hooks/useGetChildData';
 
 const PatientDetails = ({ childId }: { childId: string }) => {
   const { childData, loading, error } = useGetChildData(childId);
@@ -25,7 +25,7 @@ const PatientDetails = ({ childId }: { childId: string }) => {
   <div className="flex flex-wrap nhm:gap-[3rem] nh:gap-[2rem] nhm:ml-6 nh:ml-5 gap-20 ml-[8rem] nhm:text-[1.15rem] nh:text-[1rem] text-[1.5rem] nhm:pr-16 nh:pr-1 mt-7 mb-10">
     {[
       { label: 'Name', value: `${childData.first_name} ${childData.last_name}` },
-      { label: 'Age', value: `${calculateAge(childData.date_of_birth.toDateString())} years` },
+      { label: 'Age', value: `${calculateAge(childData.date_of_birth)} years` },
       { label: 'Current Module', value: childData.id },
     ].map((info, index) => (
       <div key={index} className="bg-white w-full nhm:w-52 nh:w-44 md:w-80 px-[2rem] py-[2rem] rounded-lg nhm:py-[0.85rem] nh:py-[0.75rem] nhm:px-[1.95rem] nh:px-[0.95rem] drop-shadow-[3px_3px_6px_rgba(0,0,0,0.5)]">

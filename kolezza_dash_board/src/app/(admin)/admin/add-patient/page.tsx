@@ -1,5 +1,3 @@
-
-
 "use client";
 import React, { useState } from 'react';
 import { ChevronLeft, User, Calendar } from 'lucide-react';
@@ -8,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import Layout from '../components/Layout';
+import Layout from "@/app/Layout";
 import Link from 'next/link';
 
 type PatientData = {

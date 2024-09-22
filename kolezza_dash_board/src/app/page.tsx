@@ -1,14 +1,12 @@
+import LoginPage from "./login/page";
 
 
-import Layout from "./(admin)/admin/components/Layout";
-import Dashboard from "./components/Dashboard";
 
 export default function Home() {
   return (
     <div>
-      <Layout>
-        <Dashboard />
-      </Layout>
+      <LoginPage/>
+     
     </div>
   );
 }

@@ -20,16 +20,15 @@ export const useUsers = () => {
             setState(prev => ({ ...prev, loading: true, error: null }));
             try {
                 console.log('Fetching users from API...');
-                const response = await fetchUsers(); // Fetch all users
+                const response = await fetchUsers(); 
                 console.log('API response:', response);
                 
-                // Destructure users from the response
                 const { users }: FetchUsersResponse = response;
                 
                 setState(prev => ({
                     ...prev,
                     currentUsers: users.slice(
-                        (prev.currentPage - 1) * 5, // Assuming 5 users per page
+                        (prev.currentPage - 1) * 5, 
                         prev.currentPage * 5
                     ),
                     totalUsers: users.length,
@@ -46,7 +45,13 @@ export const useUsers = () => {
         };
 
         getUsers();
-    }, [currentPage]); // Re-fetch data when currentPage changes
+    }, []);
 
     return { currentUsers, totalUsers, currentPage, loading, error, paginate };
 };
+
+
+
+
+
+

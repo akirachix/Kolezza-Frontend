@@ -1,5 +1,5 @@
+import { ApiPatient } from "@/app/utils/types";
 import { NextResponse } from "next/server";
-import { ApiPatient } from "@/app/(admin)/admin/components/utils/types";
 
 const baseUrl = process.env.BASE_URL;
 
@@ -13,7 +13,7 @@ export async function GET() {
     });
     const result = await response.json();
 
-    const patients: ApiPatient[] = result.child.map((patient: ApiPatient) => ({
+    const patients: ApiPatient = result.child.map((patient: ApiPatient) => ({
       id: patient.id,
       first_name: patient.first_name,
       middle_name: patient.middle_name,

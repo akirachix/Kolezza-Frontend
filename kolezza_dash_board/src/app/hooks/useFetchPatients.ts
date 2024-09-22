@@ -6,13 +6,12 @@ const useFetchPatients = () => {
   const [patients, setPatients] = useState<FetchedPatient[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  
   useEffect(() => {
     const getPatients = async () => {
       setLoading(true);
       try {
         const data = await fetchPatients();
-
         if (Array.isArray(data)) {
           setPatients(data);
         } else {
@@ -28,10 +27,8 @@ const useFetchPatients = () => {
         setLoading(false);
       }
     };
-
     getPatients();
-  }, []);
-
+  }, []); 
   return { patients, loading, error };
 };
 

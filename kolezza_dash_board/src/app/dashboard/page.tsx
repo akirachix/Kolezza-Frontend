@@ -4,6 +4,9 @@ import { Search, User, Bell, Filter } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Label } from "recharts";
 import { useSearch } from "@/app/hooks/useSearchUsers";
 import { usePatients } from "@/app/hooks/useGetPatients";
+import Layout from "@/app/Layout";
+
+
 interface Patient {
   id: number;
   first_name: string;
@@ -87,11 +90,13 @@ const Dashboard = () => {
   };
   useEffect(() => {
     setData(chartData);
-  }, [chartData]);
+  },[chartData]);
   return (
-    <div className="flex h-screen w-full">
+  <Layout>
+      <div className="flex h-screen w-full">
       <div className="flex-grow p-6 bg-gray-100 overflow-auto w-full">
         <div className="flex justify-between items-center mb-6">
+          
           <div className="relative flex-grow max-w-md">
             <input
               type="text"
@@ -115,6 +120,7 @@ const Dashboard = () => {
               )}
             </ul>
           </div>
+
           <div className="flex items-center space-x-4">
             <button className="text-gray-600">
               <User size={24} />
@@ -170,6 +176,7 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
+  </Layout>
   );
 };
 export default Dashboard;

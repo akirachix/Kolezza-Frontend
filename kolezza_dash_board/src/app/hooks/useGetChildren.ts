@@ -44,7 +44,7 @@ export function useChildren() {
 
     useEffect(() => {
         fetchChildren();
-    }, []);
+    }),[];
 
     return { activePatients, inactivePatients, loading, error };
 }

@@ -24,7 +24,7 @@ export const usePatients = () => {
     };
 
     fetchPatients();
-  }, []);
+  },[]); 
 
   return {
     patients,
