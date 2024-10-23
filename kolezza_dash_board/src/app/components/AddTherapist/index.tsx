@@ -11,6 +11,7 @@ import { TherapistRegistrationData } from '@/app/utils/types';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 const therapistSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
@@ -34,29 +35,17 @@ const TherapistRegistration = () => {
   const onSubmit = async (data: TherapistRegistrationData) => {
     try {
       await registerTherapist(data);
-      toast.success('Registration successful!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      toast.success('Registration successful!');
     } catch (error) {
-      toast.error('Registration failed. Please try again.', {
-        position: "bottom-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      toast.error('Registration failed. Please try again.');
     }
   };
 
+  const inputClassName = "mt-1 block w-full border-2 border-lightGreen rounded-md shadow-sm pl-10 pr-2 py-4";
+
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-24 p-8 space-y-6 font-nunito">
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-14 p-8 space-y-6 font-nunito">
         <div className="flex space-x-4">
           <div className="flex-1 relative">
             <label className="block text-lg font-medium mb-1">First Name</label>
@@ -65,9 +54,9 @@ const TherapistRegistration = () => {
                 {...register('firstName')}
                 type="text"
                 placeholder="Enter first name"
-                className="mt-1 block w-full border-3 border-lightGreen rounded-md shadow-sm pl-10 pr-2 py-4"
+                className={inputClassName}
               />
-              <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
+              <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-customDarkBlue" />
             </div>
             {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName.message}</p>}
           </div>
@@ -78,9 +67,9 @@ const TherapistRegistration = () => {
                 {...register('lastName')}
                 type="text"
                 placeholder="Last name"
-                className="mt-1 block w-full border-3 border-lightGreen rounded-md shadow-sm pl-10 pr-2 py-4"
+                className={inputClassName}
               />
-              <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
+              <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-customDarkBlue" />
             </div>
             {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName.message}</p>}
           </div>
@@ -94,9 +83,9 @@ const TherapistRegistration = () => {
               {...register('email')}
               type="email"
               placeholder="Enter email address"
-              className="mt-1 block w-full border-3 border-lightGreen rounded-md shadow-sm pl-10 pr-2 py-4"
+              className={inputClassName}
             />
-            <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
+            <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-customDarkBlue" />
           </div>
           {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
         </div>
@@ -109,9 +98,9 @@ const TherapistRegistration = () => {
                 {...register('hospital_name')}
                 type="text"
                 placeholder="Enter hospital name"
-                className="mt-1 block w-full border-3 border-lightGreen rounded-md shadow-sm pl-10 pr-2 py-4"
+                className={inputClassName}
               />
-              <FaHospital className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
+              <FaHospital className="absolute left-3 top-1/2 transform -translate-y-1/2 text-customDarkBlue" />
             </div>
             {errors.hospital_name && <p className="text-red-500 text-xs mt-1">{errors.hospital_name.message}</p>}
           </div>
@@ -122,13 +111,14 @@ const TherapistRegistration = () => {
                 {...register('phoneNumber')}
                 type="tel"
                 placeholder="Enter phone number"
-                className="mt-1 block w-full border-3 border-lightGreen rounded-md shadow-sm pl-10 pr-2 py-4"
+                className={inputClassName}
               />
-              <MdPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
+              <MdPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-customDarkBlue" />
             </div>
             {errors.phoneNumber && <p className="text-red-500 text-xs mt-1">{errors.phoneNumber.message}</p>}
           </div>
         </div>
+
 
         <div className="relative">
           <label className="block text-lg font-medium mb-1">Username</label>
@@ -137,12 +127,13 @@ const TherapistRegistration = () => {
               {...register('username')}
               type="text"
               placeholder="Enter username"
-              className="mt-1 block w-full border-3 border-customGreen rounded-md shadow-sm pl-10 pr-2 py-4"
+              className={inputClassName}
             />
-            <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
+            <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-customDarkBlue" />
           </div>
           {errors.username && <p className="text-red-500 text-xs mt-1">{errors.username.message}</p>}
         </div>
+
 
         <div className="flex space-x-4">
           <div className="flex-1 relative">
@@ -152,9 +143,9 @@ const TherapistRegistration = () => {
                 {...register('password')}
                 type="password"
                 placeholder="Enter your password"
-                className="mt-1 block w-full border-3 border-lightGreen rounded-md shadow-sm pl-10 pr-2 py-4"
+                className={inputClassName}
               />
-              <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
+              <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-customDarkBlue" />
             </div>
             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
           </div>
@@ -165,9 +156,9 @@ const TherapistRegistration = () => {
                 {...register('confirmPassword')}
                 type="password"
                 placeholder="Re-enter your password to confirm"
-                className="mt-1 block w-full border-3 border-lightGreen rounded-md shadow-sm pl-10 pr-2 py-4"
+                className={inputClassName}
               />
-              <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
+              <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-customDarkBlue" />
             </div>
             {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>}
           </div>
@@ -176,7 +167,7 @@ const TherapistRegistration = () => {
         <div className="mt-6">
           <button
             type="submit"
-            className={`w-40 bg-[#052049] text-white p-4 mx-auto flex justify-center rounded-lg ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#052049]'}`}
+            className={`w-40 bg-customDarkBlue text-white p-4 mx-auto flex justify-center rounded-lg ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-customBlue hover:text-customDarkBlue'}`}
             disabled={loading}
           >
             {loading ? 'Saving...' : 'Save'}

@@ -5,15 +5,16 @@ import { LayoutDashboard, Users2, UserCircle, Users } from 'lucide-react';
 import { getCookie } from 'cookies-next';
 
 const Sidebar = () => {
-  const [userRole, setUserRole] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
 
   useEffect(() => {
-    const role = getCookie('role') as string | null;
     const id = getCookie('userId') as string | null;
 
-    setUserRole(role || null);
     setUserId(id || null);
+    
+    const pathname = window.location.pathname;
+    setIsSuperAdmin(pathname.endsWith('admin/users'));
   }, []);
 
   return (
@@ -47,7 +48,7 @@ const Sidebar = () => {
             </li>
           ))}
 
-          {userRole === 'superadmin' && (
+          {isSuperAdmin && (
             <li>
               <Link
                 href="/users"

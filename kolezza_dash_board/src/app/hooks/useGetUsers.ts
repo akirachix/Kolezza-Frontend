@@ -4,16 +4,12 @@ import { User, FetchUsersResponse } from '../utils/types';
 
 export const useUsers = () => {
     const [state, setState] = useState({
-        currentUsers: [] as User[],
-        totalUsers: 0,
-        currentPage: 1,
+        users: [] as User[],
         loading: true,
         error: null as string | null,
     });
 
-    const { currentUsers, totalUsers, currentPage, loading, error } = state;
-
-    const paginate = (pageNumber: number) => setState(prev => ({ ...prev, currentPage: pageNumber }));
+    const { users, loading, error } = state;
 
     useEffect(() => {
         const getUsers = async () => {
@@ -25,33 +21,23 @@ export const useUsers = () => {
                 
                 const { users }: FetchUsersResponse = response;
                 
-                setState(prev => ({
-                    ...prev,
-                    currentUsers: users.slice(
-                        (prev.currentPage - 1) * 5, 
-                        prev.currentPage * 5
-                    ),
-                    totalUsers: users.length,
-                }));
+                setState({
+                    users,
+                    loading: false,
+                    error: null,
+                });
             } catch (err) {
                 console.error('Error fetching users:', err);
                 setState(prev => ({
                     ...prev,
                     error: err instanceof Error ? err.message : 'An unexpected error occurred.',
+                    loading: false,
                 }));
-            } finally {
-                setState(prev => ({ ...prev, loading: false }));
             }
         };
 
         getUsers();
     }, []);
 
-    return { currentUsers, totalUsers, currentPage, loading, error, paginate };
+    return { users, loading, error };
 };
-
-
-
-
-
-

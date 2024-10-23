@@ -1,14 +1,14 @@
 import { UserProfileData } from "./types";
 
 export const defaultUserProfile: UserProfileData = {
-    first_name: "Nicholus",
-    middle_name: "Ben",
-    last_name: "Samora",
-    email: "nicholoussamora@gmail.com",
-    phone: "+254132455432",
-    hospital: "Kenyatta Hospital",
-    role: "Speech Therapist",
-  };
+  avatar: "",
+  first_name: "Nicholus",
+  last_name: "Samora",
+  email: "nicholoussamora@gmail.com",
+  role: "Speech Therapist",
+  phone: "",
+  hospital: ""
+};
   
   export const getProfile = async (userId: string): Promise<UserProfileData> => {
     const response = await fetch(`/api/profile/${userId}`, { 
