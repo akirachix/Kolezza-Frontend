@@ -1,10 +1,8 @@
 "use client";
-
 import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import { useChildren } from '@/app/hooks/useGetChildren';
 import { useUsers } from '@/app/hooks/useGetUsers'; 
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 type StatBoxProps = {
@@ -77,13 +75,12 @@ const DashboardTable = () => {
   const totalPages = Math.ceil(totalUsers / usersPerPage);
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
-  // Function to convert string to title case
   const toTitleCase = (str: string) => {
     return str
-      .toLowerCase() // Convert the string to lowercase
-      .split(' ') // Split the string into words
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
-      .join(' '); // Join the words back together
+      .toLowerCase() 
+      .split(' ') 
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1)) 
+      .join(' '); 
   };
 
   return (
