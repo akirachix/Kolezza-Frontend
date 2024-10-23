@@ -3,11 +3,12 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { setCookie, getCookie } from "cookies-next"; 
-import { useRouter } from "next/navigation"; 
+import { setCookie, getCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
+import { usePathname } from 'next/navigation'; // Import usePathname
 import Image from "next/image";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { userLogin } from "../utils/fetchLogin"; 
+import { userLogin } from "../utils/fetchLogin";
 
 const schema = z.object({
   username: z.string().min(4, "Username must be at least 4 characters"),
@@ -23,17 +24,16 @@ function LoginPage() {
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter(); 
+  const router = useRouter();
+  const currentPath = usePathname(); // Get current pathname
 
   useEffect(() => {
-   
     const token = getCookie('token');
-    if (token) {
+    if (token && currentPath === "/login") { // Check if on the login page
       const role = getCookie("userRole");
       if (role === "admin") {
         router.push("/admin");
@@ -41,7 +41,7 @@ function LoginPage() {
         router.push("/dashboard");
       }
     }
-  },[]); 
+  }, [router, currentPath]); // Add currentPath to the dependency array
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
@@ -49,19 +49,14 @@ function LoginPage() {
     setLoading(true);
     setError(null);
     setSuccessMessage(null);
-
     try {
-      const result = await userLogin(data); 
+      const result = await userLogin(data);
       console.log({result});
-      
-
       if (result?.access_token) {
-        setCookie("token", result.access_token, { maxAge: 60 * 60 * 24 }); 
-        setCookie("userRole", result.role, { maxAge: 60 * 60 * 24 }); 
-        setCookie('userId', result.userId)
-
+        setCookie("token", result.access_token, { maxAge: 60 * 60 * 24 });
+        setCookie("userRole", result.role, { maxAge: 60 * 60 * 24 });
+        setCookie('userId', result.userId);
         setSuccessMessage("Login successful!");
-
         const role = result.role;
         if (role === "admin") {
           router.push("/admin");
@@ -79,7 +74,7 @@ function LoginPage() {
   };
 
   const googleSignIn = () => {
-    const googleOAuthUrl = "/api/auth/login"; 
+    const googleOAuthUrl = "/api/auth/login";
     window.location.href = googleOAuthUrl;
   };
 
@@ -90,7 +85,6 @@ function LoginPage() {
           <Image src="/images/sawatok.png" alt="SawaTok Logo" width={500} height={400} />
         </div>
       </div>
-
       <div className="w-1/2 bg-white flex flex-col items-center justify-center px-12 py-10">
         <h1 className="text-4xl font-bold mb-8 text-gray-800">Login</h1>
         <div className="w-full max-w-sm">
@@ -116,7 +110,6 @@ function LoginPage() {
                 <p className="text-red-500 mt-2">{errors.username?.message}</p>
               )}
             </div>
-
             <div className="mb-8 relative">
               <label htmlFor="password" className="block text-gray-700 font-semibold mb-2 text-lg">
                 Password
@@ -153,10 +146,8 @@ function LoginPage() {
                 <p id="password-error" className="text-red-500 mt-2">{errors.password?.message}</p>
               )}
             </div>
-
             {error && <p className="text-red-500 mb-4">{error}</p>}
             {successMessage && <p className="text-green-500 mb-4">{successMessage}</p>}
-
             <button
               type="submit"
               className={`w-full px-4 py-4 mb-4 ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-indigo-900 hover:bg-indigo-700"} text-white font-bold rounded-lg text-lg`}
@@ -165,11 +156,9 @@ function LoginPage() {
               {loading ? "Logging in..." : "Login"}
             </button>
           </form>
-
           <div className="text-center mb-4">
             <h1 className="text-lg ">OR</h1>
           </div>
-
           <div className="flex justify-center">
             <button
               onClick={googleSignIn}
@@ -189,3 +178,6 @@ function LoginPage() {
 }
 
 export default LoginPage;
+
+
+

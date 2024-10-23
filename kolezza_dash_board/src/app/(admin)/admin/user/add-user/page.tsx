@@ -1,5 +1,5 @@
 import Layout from "@/app/Layout";
-import UserRegistration from "@/app/components/AddUser";
+import UserRegistration from "@/app/components/AddUser/page";
 const AddUser = () => {
     return(
         <Layout>

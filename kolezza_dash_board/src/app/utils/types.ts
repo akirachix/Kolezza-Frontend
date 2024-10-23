@@ -76,12 +76,12 @@ export type FetchPatientsFunction = () => Promise<FetchPatientsSuccessResponse |
 
 
 export interface User {
-    id: number;
-    username: string;
-    first_name: string;
-    last_name: string;
-    email: string;
-    role: string;
+  id: number;
+  username: string;
+  first_name: string | null;
+  last_name: string | null;
+  email: string | null;
+  role: string;
 }
 
 export interface UsersFetchSuccessResponse {
@@ -225,6 +225,16 @@ export  interface LoginCredentials {
   username: string;
   password: string;
 }
+
+// types.ts
+export type GetUser = {
+  id: number;
+  username: string;
+  first_name: string | null;
+  last_name: string | null;
+  email: string | null;
+  role: string;
+};
 
 
 

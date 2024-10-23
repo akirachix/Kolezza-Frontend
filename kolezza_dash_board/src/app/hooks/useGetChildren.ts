@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { FetchChildrenResponse } from '../utils/types';
-
-const url = '/api/children';
+import { fetchChildren } from '@/app/utils/fetchChildren'; // Assuming this utility exists
+import { FetchChildrenResponse } from '@/app/utils/types';
 
 export function useChildren() {
     const [state, setState] = useState({
@@ -13,17 +12,11 @@ export function useChildren() {
 
     const { activePatients, inactivePatients, loading, error } = state;
 
-    const fetchChildren = async () => {
+    const getChildren = async () => {
         setState(prev => ({ ...prev, loading: true, error: null }));
         try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error('Failed to fetch children');
-            }
-
-            const responseData: FetchChildrenResponse = await response.json();
-            const children = responseData.child || []; 
-
+            const response: FetchChildrenResponse = await fetchChildren(); 
+            const children = response.child || []; 
             const active = children.filter(child => !child.is_deleted).length;
             const inactive = children.filter(child => child.is_deleted).length;
 
@@ -43,8 +36,8 @@ export function useChildren() {
     };
 
     useEffect(() => {
-        fetchChildren();
-    }),[];
+        getChildren();
+    }, []); 
 
     return { activePatients, inactivePatients, loading, error };
 }

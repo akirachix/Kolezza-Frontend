@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import fetchProgressData from '@/app/utils/fetchProgressData';
@@ -7,7 +6,6 @@ import 'chart.js/auto';
 const Line = dynamic(() => import('react-chartjs-2').then((mod) => mod.Line), {
   ssr: false,
 });
-
 
 const LineChart = ({ childId }: { childId: string }) => {
   const [chartData, setChartData] = useState({
@@ -26,15 +24,15 @@ const LineChart = ({ childId }: { childId: string }) => {
 
   useEffect(() => {
     const fetchProgressDataForChart = async () => {
+      setLoading(true); 
       try {
         const data = await fetchProgressData(childId);
-
         setChartData({
-          labels: data.labels,
+          labels: data.labels || [], 
           datasets: [
             {
               label: 'Frequency (Hz)',
-              data: data.values,
+              data: data.values || [], 
               fill: false,
               borderColor: '#8BC34A',
               tension: 0.1,
@@ -49,7 +47,7 @@ const LineChart = ({ childId }: { childId: string }) => {
     };
 
     fetchProgressDataForChart();
-  },[]);
+  }, [childId]); 
 
   const options = {
     scales: {
