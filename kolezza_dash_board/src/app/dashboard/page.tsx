@@ -17,7 +17,7 @@ import Layout from "@/app/Layout";
 interface Patient {
   id: number;
   first_name: string;
-  last_name: string;
+  last_name: boolean;
   is_deleted: boolean;
   is_new: boolean;
   date_of_registration?: string;
@@ -67,56 +67,72 @@ const Dashboard = () => {
     (patient: Patient) => patient.is_deleted
   ).length;
 
-  const groupPatientsByDay = (patients: Patient[]) => {
+  const groupPatientsByTimeFrame = (patients: Patient[], timeFrame: "day" | "week" | "month") => {
     const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-    const months: { [key: string]: ChartData } = {};
-    const dayStats: ChartData[] = days.map((day) => ({
-      timeFrame: day,
-      activeUsers: 0,
-      inactiveUsers: 0,
-    }));
+    const months = Array.from({ length: 12 }, (_, i) =>
+      new Date(0, i).toLocaleString("default", { month: "long" })
+    );
+
+    let timeFrameStats: ChartData[] = [];
+
+    if (timeFrame === "day") {
+      timeFrameStats = days.map((day) => ({
+        timeFrame: day,
+        activeUsers: 0,
+        inactiveUsers: 0,
+      }));
+    } else if (timeFrame === "month") {
+      timeFrameStats = months.map((month) => ({
+        timeFrame: month,
+        activeUsers: 0,
+        inactiveUsers: 0,
+      }));
+    }
+
+    const today = new Date();
+    const sevenDaysAgo = new Date(today);
+    sevenDaysAgo.setDate(today.getDate() - 7);
 
     patients.forEach((patient: Patient) => {
-      const registrationDate = new Date(
-        patient.date_of_registration || Date.now()
-      );
-      const dayIndex = (registrationDate.getDay() + 6) % 7; // Adjusting to start from Monday
-      const month = registrationDate.toLocaleString("default", {
-        month: "long",
-      }); // Get full month name
-
-      // Daily stats
-      if (patient.is_deleted) {
-        dayStats[dayIndex].inactiveUsers++;
-      } else {
-        dayStats[dayIndex].activeUsers++;
-      }
-
-      // Monthly stats
-      if (!months[month]) {
-        months[month] = {
-          timeFrame: month,
-          activeUsers: 0,
-          inactiveUsers: 0,
-        };
-      }
-      if (patient.is_deleted) {
-        months[month].inactiveUsers++;
-      } else {
-        months[month].activeUsers++;
+      const registrationDate = new Date(patient.date_of_registration || Date.now());
+      const dayIndex = (registrationDate.getDay() + 6) % 7; // Adjust to get Monday as the first day
+      const monthIndex = registrationDate.getMonth();
+      
+      if (timeFrame === "day") {
+        if (patient.is_deleted) {
+          timeFrameStats[dayIndex].inactiveUsers++;
+        } else {
+          timeFrameStats[dayIndex].activeUsers++;
+        }
+      } else if (timeFrame === "week" && registrationDate >= sevenDaysAgo) {
+        if (patient.is_deleted) {
+          timeFrameStats.push({
+            timeFrame: "Last 7 Days",
+            activeUsers: 0,
+            inactiveUsers: timeFrameStats[0]?.inactiveUsers + 1 || 1,
+          });
+        } else {
+          timeFrameStats.push({
+            timeFrame: "Last 7 Days",
+            activeUsers: timeFrameStats[0]?.activeUsers + 1 || 1,
+            inactiveUsers: 0,
+          });
+        }
+      } else if (timeFrame === "month") {
+        if (patient.is_deleted) {
+          timeFrameStats[monthIndex].inactiveUsers++;
+        } else {
+          timeFrameStats[monthIndex].activeUsers++;
+        }
       }
     });
 
-    // Convert months object to array
-    const monthlyStats = Object.values(months);
-
-    return { dailyStats: dayStats, monthlyStats };
+    return timeFrameStats;
   };
 
-  const { dailyStats, monthlyStats } = useMemo(
-    () => groupPatientsByDay(patients),
-    [patients]
-  );
+  const dailyStats = useMemo(() => groupPatientsByTimeFrame(patients, "day"), [patients]);
+  const weeklyStats = useMemo(() => groupPatientsByTimeFrame(patients, "week"), [patients]);
+  const monthlyStats = useMemo(() => groupPatientsByTimeFrame(patients, "month"), [patients]);
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filteredData, setFilteredData] = useState<ChartData[]>(dailyStats);
@@ -142,21 +158,9 @@ const Dashboard = () => {
         }))
       );
     } else if (filter === "weeklyUsers") {
-      setFilteredData(
-        monthlyStats.map(({ timeFrame, activeUsers }) => ({
-          timeFrame,
-          activeUsers,
-          inactiveUsers: 0,
-        }))
-      );
+      setFilteredData(weeklyStats);
     } else if (filter === "monthlyUsers") {
-      setFilteredData(
-        monthlyStats.map(({ timeFrame, activeUsers }) => ({
-          timeFrame,
-          activeUsers,
-          inactiveUsers: 0,
-        }))
-      );
+      setFilteredData(monthlyStats);
     }
   };
 
@@ -263,28 +267,26 @@ const Dashboard = () => {
                 )}
               </div>
             </div>
-            <ResponsiveContainer width="100%" height={400}>
-              <BarChart
-                data={filteredData}
-                barSize={40}
-                barGap={0}
-              >
-                <XAxis dataKey="timeFrame">
-                  <Label value="Time Frame" offset={0} position="insideBottom" />
-                </XAxis>
-                <YAxis>
-                  <Label
-                    value="Number of Users"
-                    angle={-90}
-                    position="insideLeft"
-                    style={{ textAnchor: "middle" }}
-                  />
-                </YAxis>
-                <Tooltip />
-                <Bar dataKey="inactiveUsers" fill="#e0e0e0" stackId="a" />
-                <Bar dataKey="activeUsers" fill="#4caf50" stackId="a" />
-              </BarChart>
-            </ResponsiveContainer>
+            <div className="w-full h-96">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={filteredData}>
+                  <XAxis dataKey="timeFrame">
+                    <Label value="Time Frame" position="insideBottom" offset={-5} />
+                  </XAxis>
+                  <YAxis>
+                    <Label
+                      value="Number of Users"
+                      angle={-75}
+                      position="insideLeft"
+                      offset={-1}
+                    />
+                  </YAxis>
+                  <Tooltip />
+                  <Bar dataKey="activeUsers" fill="#4CAF50" />
+                  <Bar dataKey="inactiveUsers" fill="#FF5252" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </div>
       </div>
