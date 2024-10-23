@@ -70,7 +70,7 @@ const AdminRegistration = () => {
               {...register('firstName')}
               type="text"
               placeholder="Enter first name"
-              className="mt-1 block w-full border-3 border-[#90BD31] rounded-md shadow-sm pl-10 pr-2 py-4"
+              className="mt-1 block w-full border-3 border-lightGreen rounded-md shadow-sm pl-10 pr-2 py-4"
             />
             <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
           </div>
@@ -150,7 +150,7 @@ const AdminRegistration = () => {
 
       <button
         type="submit"
-        className={`w-40 bg-[#052049] text-white p-4 mx-auto flex justify-center rounded-lg ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#052049]'}`}
+        className={`w-40 bg-customDarkBlue text-white p-4 mx-auto flex justify-center rounded-lg ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#052049]'}`}
         disabled={loading}
       >
         {loading ? 'Saving...' : 'Save'}

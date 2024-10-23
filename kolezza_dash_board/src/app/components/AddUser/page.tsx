@@ -3,12 +3,14 @@ import React, { useState } from 'react';
 import { IoIosArrowBack } from "react-icons/io";
 import TherapistRegistration from '../AddTherapist';
 import AdminRegistration from '../AddAdmin';
+import Layout from '@/app/Layout';
 
 
 const UserRegistration = () => {
   const [isTherapist, setIsTherapist] = useState(true);
  
   return (
+   <Layout>
     <div>
        <div className="border-customGreen h-40 text-black flex flex-col w-full font-nunito">
        <div className="flex items-center ml-8 top-6">
@@ -31,6 +33,7 @@ const UserRegistration = () => {
           {isTherapist===true? <TherapistRegistration /> : <AdminRegistration/>}
         </div>
     </div>
+    </Layout>
   );
 };
 export default UserRegistration;
