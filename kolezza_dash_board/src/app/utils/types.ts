@@ -212,6 +212,7 @@ successMessage: string;
 export type FetchAdminFunction = (data: AdminRegistrationData) => Promise<RegistrationSuccessResponse>;
 
 export interface UserProfileData {
+  avatar: string;
   first_name: string;
   middle_name?: string;
   last_name: string;

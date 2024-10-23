@@ -1,11 +1,10 @@
 "use client";
 import React, { useState, useMemo, useEffect } from "react";
-import { Search, User, Bell, Filter } from "lucide-react";
+import { Search, Filter } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Label } from "recharts";
 import { useSearch } from "@/app/hooks/useSearchUsers";
 import { usePatients } from "@/app/hooks/useGetPatients";
 import Layout from "@/app/Layout";
-
 
 interface Patient {
   id: number;
@@ -121,15 +120,6 @@ const Dashboard = () => {
             </ul>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <button className="text-gray-600">
-              <User size={24} />
-            </button>
-            <button className="text-gray-600 relative">
-              <Bell size={24} />
-              <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-green-500"></span>
-            </button>
-          </div>
         </div>
         <div className="grid grid-cols-3 gap-6 mb-6">
           <StatCard title="TOTAL PATIENTS" value={totalPatients} bgColor="bg-blue-300 drop-shadow-lg" />
