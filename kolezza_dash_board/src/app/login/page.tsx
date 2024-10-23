@@ -41,7 +41,7 @@ function LoginPage() {
         router.push("/dashboard");
       }
     }
-  }, [router, currentPath]); // Add currentPath to the dependency array
+  }, [router, currentPath]); 
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
@@ -71,11 +71,6 @@ function LoginPage() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const googleSignIn = () => {
-    const googleOAuthUrl = "/api/auth/login";
-    window.location.href = googleOAuthUrl;
   };
 
   return (
@@ -156,21 +151,6 @@ function LoginPage() {
               {loading ? "Logging in..." : "Login"}
             </button>
           </form>
-          <div className="text-center mb-4">
-            <h1 className="text-lg ">OR</h1>
-          </div>
-          <div className="flex justify-center">
-            <button
-              onClick={googleSignIn}
-              disabled={loading}
-              className={`flex items-center justify-center px-4 py-2 border border-gray-500 rounded-lg ${loading ? "bg-gray-300" : "hover:bg-gray-500"}`}
-            >
-              <Image src="/images/google.png" alt="Google Icon" width={20} height={20} />
-              <span className={`ml-2 text-sm font-semibold ${loading ? "text-gray-400" : "text-gray-800"}`}>
-                {loading ? "Signing in..." : "Sign in with Google"}
-              </span>
-            </button>
-          </div>
         </div>
       </div>
     </div>
