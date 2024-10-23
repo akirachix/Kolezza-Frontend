@@ -1,6 +1,5 @@
 import { IoIosArrowBack } from 'react-icons/io';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import useGetChildData from '@/app/hooks/useGetChildData';
 
 const PatientDetails = ({ childId }: { childId: string }) => {
@@ -33,10 +32,6 @@ const PatientDetails = ({ childId }: { childId: string }) => {
         <p>{info.value}</p>
       </div>
     ))}
-  </div>
-  <div className="flex flex-wrap justify-center nhm:gap-112 nh:gap-10  gap-[20rem] text-xl font-semibold">
-    <Link href={`/patient-progress/${childId}`} className="hover:underline">Patient Progress</Link>
-    <Link href={`/activate-module/${childId}`} className="hover:underline">Activate New Module</Link>
   </div>
 </div>
 
