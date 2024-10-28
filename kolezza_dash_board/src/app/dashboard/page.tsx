@@ -6,7 +6,7 @@ import { useFetchTherapists } from '../hooks/useFetchTherapists';
 import { useFetchChildren } from '../hooks/useFetchChildren';
 import Layout from '../Layout';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { ChartOptions } from 'chart.js';
+import { ChartOptions, TooltipItem} from 'chart.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartDataLabels);
 
@@ -61,10 +61,10 @@ const Dashboard: React.FC = () => {
           weight: 'bold',
           family: "'Inter', sans-serif",
         },
-        formatter: (value: number, context: { chart: { data: { labels: string[]; datasets: { data: number[] }[] }; }; dataIndex: number }) => {
-          const label = context.chart.data.labels[context.dataIndex] as string; 
+        formatter: (value: number, context: TooltipItem<'doughnut'>) => {
+          const label = context.chart.data.labels?.[context.dataIndex] as string; 
           return `${label}: ${value}`;
-        }      
+        },
       },
       legend: {
         display: true,
@@ -87,6 +87,7 @@ const Dashboard: React.FC = () => {
     },
     cutout: '70%',
   };
+  
   
   const getTherapistsData = () => {
     if (tActive || tWeekly || tMonthly) {
