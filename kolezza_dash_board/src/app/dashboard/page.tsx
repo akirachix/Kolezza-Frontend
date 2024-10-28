@@ -47,6 +47,15 @@ const Dashboard: React.FC = () => {
     ],
   };
 
+  type CustomTooltipContext = {
+    chart: {
+      data: {
+        labels?: unknown[]; 
+      };
+    };
+    dataIndex: number;
+  };
+
   const donutOptions: ChartOptions<'doughnut'> = {
     responsive: true,
     maintainAspectRatio: false,
@@ -61,10 +70,11 @@ const Dashboard: React.FC = () => {
           weight: 'bold',
           family: "'Inter', sans-serif",
         },
-        formatter: (value: number, context: TooltipItem<'doughnut'>) => {
-          const label = context.chart.data.labels?.[context.dataIndex] as string; 
+        formatter: (value: number, context: CustomTooltipContext) => {
+          const labels = context.chart.data.labels as string[]; 
+          const label = labels?.[context.dataIndex] || '';
           return `${label}: ${value}`;
-        },
+        },  
       },
       legend: {
         display: true,
