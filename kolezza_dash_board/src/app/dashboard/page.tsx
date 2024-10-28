@@ -6,6 +6,9 @@ import { useFetchTherapists } from '../hooks/useFetchTherapists';
 import { useFetchChildren } from '../hooks/useFetchChildren';
 import Layout from '../Layout';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { ChartOptions } from 'chart.js';
+
+
 
 ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartDataLabels);
 
@@ -35,7 +38,7 @@ const Dashboard: React.FC = () => {
     setTotalUsers((tLength || dummyTotalTherapists) + (cLength || dummyTotalChildren));
   }, [tLength, cLength]);
 
-  const donutData = {
+  const donutData =  {
     labels: ['Therapists', 'Children'],
     datasets: [
       {
@@ -46,12 +49,12 @@ const Dashboard: React.FC = () => {
     ],
   };
 
-  const donutOptions = {
+  const donutOptions: ChartOptions<'doughnut'> = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       datalabels: {
-        color: '#000', 
+        color: '#000',
         anchor: 'end',
         align: 'end',
         offset: 8,
@@ -60,33 +63,33 @@ const Dashboard: React.FC = () => {
           weight: 'bold',
           family: "'Inter', sans-serif",
         },
-        formatter: (value: number, context: { chart: { data: { labels: { [x: string]: string; }; }; }; dataIndex: string | number; }) => {
-          const label = context.chart.data.labels[context.dataIndex];
+        formatter: (value: number, context: { chart: { data: ChartData<'doughnut'>; }; dataIndex: number }) => {
+          const label = context.chart.data.labels[context.dataIndex] as string; // Ensure it is treated as a string
           return `${label}: ${value}`;
         },
       },
       legend: {
         display: true,
-        position: 'bottom',
+        position: 'bottom' as const,
         labels: {
           font: {
-            size: 16, 
+            size: 16,
             family: "'Inter', sans-serif",
             weight: 'bold',
           },
           color: '#333',
-          padding: 28, 
-          boxWidth: 20, 
-          usePointStyle: true, 
+          padding: 28,
+          boxWidth: 20,
+          usePointStyle: true,
         },
       },
       tooltip: {
         enabled: true,
       },
     },
-    cutout: '70%', 
+    cutout: '70%',
   };
-
+  
   const getTherapistsData = () => {
     if (tActive || tWeekly || tMonthly) {
       return therapistsFilter === 'active' ? Array(12).fill(tActive)
