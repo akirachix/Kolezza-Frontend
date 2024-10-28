@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartData } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale} from 'chart.js';
 import { Doughnut, Bar } from 'react-chartjs-2';
 import { useFetchTherapists } from '../hooks/useFetchTherapists';
 import { useFetchChildren } from '../hooks/useFetchChildren';
