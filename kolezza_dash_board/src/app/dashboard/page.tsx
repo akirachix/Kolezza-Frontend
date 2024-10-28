@@ -1,14 +1,12 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartData } from 'chart.js';
 import { Doughnut, Bar } from 'react-chartjs-2';
 import { useFetchTherapists } from '../hooks/useFetchTherapists';
 import { useFetchChildren } from '../hooks/useFetchChildren';
 import Layout from '../Layout';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { ChartOptions } from 'chart.js';
-
-
 
 ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartDataLabels);
 
@@ -63,10 +61,10 @@ const Dashboard: React.FC = () => {
           weight: 'bold',
           family: "'Inter', sans-serif",
         },
-        formatter: (value: number, context: { chart: { data: ChartData<'doughnut'>; }; dataIndex: number }) => {
-          const label = context.chart.data.labels[context.dataIndex] as string; // Ensure it is treated as a string
+        formatter: (value: number, context: { chart: { data: { labels: string[]; datasets: { data: number[] }[] }; }; dataIndex: number }) => {
+          const label = context.chart.data.labels[context.dataIndex] as string; 
           return `${label}: ${value}`;
-        },
+        }      
       },
       legend: {
         display: true,
