@@ -149,7 +149,7 @@ const Dashboard: React.FC = () => {
     ],
   };
 
-  const barOptions = {
+  const barOptions: ChartOptions<'bar'> = {
     responsive: true,
     plugins: {
       legend: {
@@ -161,14 +161,14 @@ const Dashboard: React.FC = () => {
       },
       datalabels: {
         color: '#FFFFFF',
-        anchor: 'center',
-        align: 'center' as const,  // Updated with compatible type
+        anchor: 'center' as const, // Explicitly set to "center" as required
+        align: 'center' as const,
         font: {
           weight: 'bold',
           size: 12,
         },
         formatter: (value: number) => {
-          return value > 0 ? value : '';
+          return value > 0 ? value : ''; 
         },
         padding: {
           top: 0,
@@ -202,7 +202,6 @@ const Dashboard: React.FC = () => {
       },
     },
   };
- 
 
   return (
     <Layout>
