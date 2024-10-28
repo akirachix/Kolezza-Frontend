@@ -102,25 +102,15 @@ export interface Child {
     updated_at: string | null;
     level_of_stuttering_id: number;
     childmodule_id: number;
-}
+    created_at: string;
+    parent_id: string;
+    }
+
 export interface FetchChildrenResponse {
     child: Child[];
 }
 export interface FetchUsersResponse {
     users: User[];
-}
-
-export interface Child {
-  id: number;
-  first_name: string;
-  last_name: string;
-  middle_name: string;
-  gender: string;
-  date_of_birth: string;
-  is_deleted: boolean;
-  updated_at: string | null;
-  level_of_stuttering_id: number;
-  childmodule_id: number;
 }
 
 export interface ChildrenResponse {
@@ -227,7 +217,6 @@ export  interface LoginCredentials {
   password: string;
 }
 
-// types.ts
 export type GetUser = {
   id: number;
   username: string;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchChildren } from '@/app/utils/fetchChildren'; // Assuming you have this utility
+import { fetchChildren } from '@/app/utils/fetchChildren';
 import { FetchChildrenResponse, Child } from '@/app/utils/types';
 
 export const useChildren = () => {
@@ -17,8 +17,7 @@ export const useChildren = () => {
         const response: FetchChildrenResponse = await fetchChildren();
         console.log('API response:', response);
 
-        // Ensure that the `child` field is always treated as an array
-        const children: Child[] = response?.child ?? [];  // Default to an empty array if `child` is undefined or null
+        const children: Child [] = response?.child ?? [];
 
         const active = children.filter(child => !child.is_deleted).length;
         const inactive = children.filter(child => child.is_deleted).length;

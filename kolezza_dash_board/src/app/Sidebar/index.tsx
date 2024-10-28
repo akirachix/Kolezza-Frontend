@@ -18,7 +18,7 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <div className="w-64 h-screen bg-customDarkBlue text-white flex flex-col">
+    <div className="w-64 h-[100%] bg-customDarkBlue text-white flex flex-col">
       <div className="p-6 mb-8">
         <div className="flex items-center mb-2 mt-7 ml-5">
           <Image
