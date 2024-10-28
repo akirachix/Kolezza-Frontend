@@ -162,13 +162,13 @@ const Dashboard: React.FC = () => {
       datalabels: {
         color: '#FFFFFF',
         anchor: 'center',
-        align: 'center',
+        align: 'center' as const,  // Updated with compatible type
         font: {
           weight: 'bold',
           size: 12,
         },
         formatter: (value: number) => {
-          return value > 0 ? value : ''; 
+          return value > 0 ? value : '';
         },
         padding: {
           top: 0,
@@ -202,6 +202,7 @@ const Dashboard: React.FC = () => {
       },
     },
   };
+ 
 
   return (
     <Layout>
