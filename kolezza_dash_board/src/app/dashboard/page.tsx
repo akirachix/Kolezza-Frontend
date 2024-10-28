@@ -6,7 +6,7 @@ import { useFetchTherapists } from '../hooks/useFetchTherapists';
 import { useFetchChildren } from '../hooks/useFetchChildren';
 import Layout from '../Layout';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { ChartOptions, TooltipItem} from 'chart.js';
+import { ChartOptions} from 'chart.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartDataLabels);
 
