@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchChildren } from '@/app/utils/fetchChildren';
+import { fetchAllChildren } from '@/app/utils/fetchChildren';
 import { FetchChildrenResponse, Child } from '@/app/utils/types';
 
 export const useChildren = () => {
@@ -14,7 +14,7 @@ export const useChildren = () => {
       setError(null);
       try {
         console.log('Fetching children from API...');
-        const response: FetchChildrenResponse = await fetchChildren();
+        const response: FetchChildrenResponse = await fetchAllChildren();
         console.log('API response:', response);
 
         const children: Child [] = response?.child ?? [];

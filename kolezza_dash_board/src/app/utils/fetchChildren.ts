@@ -25,31 +25,30 @@ export const fetchChildren = async (): Promise<Child[]> => {
   }
 };
 
-// src/app/utils/fetchChildren.ts
-// import { FetchChildrenResponse } from './types';
+import { FetchChildrenResponse } from './types';
 
-// export const fetchChildren = async (): Promise<FetchChildrenResponse> => {
-//   try {
-//     const token = localStorage.getItem('token');
-//     if (!token) {
-//       throw new Error('No authentication token found');
-//     }
+export const fetchAllChildren = async (): Promise<FetchChildrenResponse> => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found');
+    }
 
-//     const response = await fetch(`${process.env.BASE_URL}/api/children`, {
-//       headers: {
-//         'Authorization': `Bearer ${token}`,
-//         'Content-Type': 'application/json',
-//       },
-//     });
+    const response = await fetch(`${process.env.BASE_URL}/api/children`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
 
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! status: ${response.status}`);
-//     }
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
-//     const data: FetchChildrenResponse = await response.json();
-//     return data;
-//   } catch (error) {
-//     console.error('Error fetching children:', error);
-//     throw error;
-//   }
-// };
+    const data: FetchChildrenResponse = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching children:', error);
+    throw error;
+  }
+};
