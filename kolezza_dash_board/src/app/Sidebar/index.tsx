@@ -5,19 +5,20 @@ import { LayoutDashboard, Users2, UserCircle, Users } from 'lucide-react';
 import { getCookie } from 'cookies-next';
 
 const Sidebar = () => {
-  const [userRole, setUserRole] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
 
   useEffect(() => {
-    const role = getCookie('role') as string | null;
     const id = getCookie('userId') as string | null;
 
-    setUserRole(role || null);
     setUserId(id || null);
+    
+    const pathname = window.location.pathname;
+    setIsSuperAdmin(pathname.endsWith('admin/users'));
   }, []);
 
   return (
-    <div className="w-64 h-screen bg-customDarkBlue text-white flex flex-col">
+    <div className="w-64 h-[100%] bg-customDarkBlue text-white flex flex-col">
       <div className="p-6 mb-8">
         <div className="flex items-center mb-2 mt-7 ml-5">
           <Image
@@ -32,7 +33,7 @@ const Sidebar = () => {
       <nav className="flex-grow">
         <ul className="space-y-10 ml-6">
           {[
-            { name: 'Dashboard', icon: LayoutDashboard, href: '/' },
+            { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
             { name: 'Patients', icon: Users2, href: '/patients' },
             { name: 'Profile', icon: UserCircle, href: `/profile/${userId}` },
           ].map((item) => (
@@ -47,7 +48,7 @@ const Sidebar = () => {
             </li>
           ))}
 
-          {userRole === 'superadmin' && (
+          {isSuperAdmin && (
             <li>
               <Link
                 href="/users"

@@ -1,50 +1,39 @@
 import { useState, useEffect } from 'react';
-import { FetchChildrenResponse } from '../utils/types';
+import { fetchAllChildren } from '@/app/utils/fetchChildren';
+import { FetchChildrenResponse, Child } from '@/app/utils/types';
 
-const url = '/api/children';
+export const useChildren = () => {
+  const [activePatients, setActivePatients] = useState<number>(0);
+  const [inactivePatients, setInactivePatients] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-export function useChildren() {
-    const [state, setState] = useState({
-        activePatients: 0,
-        inactivePatients: 0,
-        loading: true,
-        error: null as string | null,
-    });
+  useEffect(() => {
+    const getChildren = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        console.log('Fetching children from API...');
+        const response: FetchChildrenResponse = await fetchAllChildren();
+        console.log('API response:', response);
 
-    const { activePatients, inactivePatients, loading, error } = state;
+        const children: Child [] = response?.child ?? [];
 
-    const fetchChildren = async () => {
-        setState(prev => ({ ...prev, loading: true, error: null }));
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error('Failed to fetch children');
-            }
+        const active = children.filter(child => !child.is_deleted).length;
+        const inactive = children.filter(child => child.is_deleted).length;
 
-            const responseData: FetchChildrenResponse = await response.json();
-            const children = responseData.child || []; 
-
-            const active = children.filter(child => !child.is_deleted).length;
-            const inactive = children.filter(child => child.is_deleted).length;
-
-            setState({
-                activePatients: active,
-                inactivePatients: inactive,
-                loading: false,
-                error: null,
-            });
-        } catch (err) {
-            setState(prev => ({
-                ...prev,
-                loading: false,
-                error: (err as Error).message,
-            }));
-        }
+        setActivePatients(active);
+        setInactivePatients(inactive);
+      } catch (err) {
+        console.error('Error fetching children:', err);
+        setError(err instanceof Error ? err.message : 'An unexpected error occurred.');
+      } finally {
+        setLoading(false);
+      }
     };
 
-    useEffect(() => {
-        fetchChildren();
-    }),[];
+    getChildren();
+  }, []);
 
-    return { activePatients, inactivePatients, loading, error };
-}
+  return { activePatients, inactivePatients, loading, error };
+};
