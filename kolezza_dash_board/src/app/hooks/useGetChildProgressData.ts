@@ -8,13 +8,16 @@ const useGetProgressData = (childId: string) => {
 
   useEffect(() => {
     const getProgressData = async () => {
-      setLoading(true)
+      if (!childId) {
+        setProgressData({ labels: [], values: [] });
+        return; 
+      }
+      setLoading(true);
+      setError(null);
       try {
         const data = await fetchProgressData(childId);
         setProgressData(data);
-        setLoading(false)
       } catch (err) {
-        setLoading(false)
         setError('Failed to fetch progress data');
       } finally {
         setLoading(false);
@@ -22,7 +25,8 @@ const useGetProgressData = (childId: string) => {
     };
 
     getProgressData();
-  }, []); 
+  }, [childId]); 
+
   return { progressData, loading, error };
 };
 
