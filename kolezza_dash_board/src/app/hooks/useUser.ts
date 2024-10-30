@@ -7,7 +7,7 @@ export const useUser = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch('/api/user', {
+        const response = await fetch('/api/users', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
