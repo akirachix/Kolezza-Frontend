@@ -40,24 +40,12 @@ export interface FetchedPatient {
   gender: string;             
 }
 
-// export interface TherapistResponse {
-//   phone_number: string;
-//   hospital_name: string;
-//   user: string;
-//   data: {
-//     user: {
-//       username: string;
-//       role: string;
-//     };
-//   };
-// }
-
 export interface FetchChildrenResponse {
   child: Child[];
 }
 
 export interface TherapistResponse {
-  user: User; // Make sure this matches your `User` interface
+  user: User; 
   hospital_name: string;
   phone_number: string;
 }

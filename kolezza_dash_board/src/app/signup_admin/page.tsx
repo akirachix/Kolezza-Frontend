@@ -20,7 +20,6 @@ const SignUpPage = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
 
-  // Define validation schema with Yup
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
@@ -48,8 +47,7 @@ const SignUpPage = () => {
       const result = await fetchAdmin(data);
   
       if (result?.message === "Successful SignUp" && result.user) {
-        // console.log("Result data for cookie:", result);
-        setCookie('userSession', JSON.stringify(result.user), { maxAge: 86400, path: "/" }); // Expires in 1 day
+        setCookie('userSession', JSON.stringify(result.user), { maxAge: 86400, path: "/" }); 
   
         toast.success("Sign up successful! Redirecting to login...", {
           position: "top-right",

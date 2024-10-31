@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-// import Sidebar from "../Sidebar";
 import TherapistSidebar from "../TherapistSidebar";
 
 export default function TherapistLayout({ children }: { children: React.ReactNode }) {
