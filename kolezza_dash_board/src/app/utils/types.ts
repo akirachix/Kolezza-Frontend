@@ -40,16 +40,26 @@ export interface FetchedPatient {
   gender: string;             
 }
 
+// export interface TherapistResponse {
+//   phone_number: string;
+//   hospital_name: string;
+//   user: string;
+//   data: {
+//     user: {
+//       username: string;
+//       role: string;
+//     };
+//   };
+// }
+
+export interface FetchChildrenResponse {
+  child: Child[];
+}
+
 export interface TherapistResponse {
-  phone_number: any;
-  hospital_name: any;
-  user: any;
-  data: {
-    user: {
-      username: string;
-      role: string;
-    };
-  };
+  user: User; // Make sure this matches your `User` interface
+  hospital_name: string;
+  phone_number: string;
 }
 
 export interface FetchPatientsSuccessResponse {
@@ -79,6 +89,10 @@ export interface User {
   last_name?: string;
   email: string;
   role: string;
+}
+
+export interface Result {
+  user: User;
 }
 
 export interface UserResponse {

@@ -1,4 +1,3 @@
-
 'use client';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -10,7 +9,6 @@ import { AdminRegistrationData } from '@/app/utils/types';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const adminSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
@@ -18,6 +16,7 @@ const adminSchema = z.object({
   username: z.string().min(3, 'Username must be at least 3 characters'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
   confirmPassword: z.string().min(8, 'Confirm password is required'),
+  role: z.string().default('superadmin') 
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ['confirmPassword'],
@@ -76,7 +75,6 @@ const AdminRegistration = () => {
           </div>
         </div>
 
- 
         <div className="relative">
           <label className="block text-lg font-medium mb-1">Email</label>
           <div className="relative">
@@ -90,7 +88,6 @@ const AdminRegistration = () => {
           </div>
           {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
         </div>
-
 
         <div className="relative">
           <label className="block text-lg font-medium mb-1">Username</label>
@@ -134,6 +131,9 @@ const AdminRegistration = () => {
             {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>}
           </div>
         </div>
+
+        {/* Hidden role input */}
+        <input type="hidden" {...register('role')} value="admin" />
 
         <div className="mt-6">
           <button

@@ -11,6 +11,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
         }
 
+        
         const response = await fetch(`${baseUrl}/api/therapist_registration/`, {
             method: 'POST',
             headers: {
