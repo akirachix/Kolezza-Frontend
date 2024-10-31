@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchUsers } from "@/app/utils/fetchUser";
+import { fetchUsers } from "../utils/fetchUsers";
 
 type UserRole = "speech_therapist" | "superadmin";
 
@@ -47,7 +47,8 @@ const useGetUsersData = () => {
     };
 
     getUsersData();
-  }, []);
+  }),
+    [];
 
   return { users, loading, error };
 };
