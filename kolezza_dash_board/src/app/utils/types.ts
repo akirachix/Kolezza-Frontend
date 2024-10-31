@@ -1,5 +1,18 @@
-export interface Patient {
+export interface Child {
   id: number;
+  first_name: string;
+  last_name: string;
+  middle_name: string;
+  gender: string;
+  date_of_birth: string;
+  is_deleted: boolean;
+  updated_at: string | null;
+  level_of_stuttering_id: number;
+  childmodule_id: number;
+}
+
+export interface Patient {
+  id: number ;
   first_name: string;
   last_name: string;
   middle_name?: string; 
@@ -7,31 +20,40 @@ export interface Patient {
   date_of_birth: Date; 
 }
 
-
-export interface UsersFetchSuccessResponse {
-    users: User[];
-    total: number;
+export interface ChildrenResponse {
+  child: Child[];
 }
 
-export interface PatientRegistrationState {
-  loading: boolean;
-  errorMessage: string;
-  successMessage: string;
+export interface RegistrationErrorResponse {
+  error: string; 
+  details?: {
+      field?: string;
+      message?: string;
+  };
 }
 
-export interface ApiPatient {
-  id: number;
-  first_name: string;
-  middle_name?: string; 
-  last_name: string;
-  gender: string;
+export interface FetchedPatient {
+  id: number;                  
+  first_name: string;         
+  middle_name?: string;       
+  last_name: string;          
+  gender: string;             
 }
 
+export interface TherapistResponse {
+  phone_number: any;
+  hospital_name: any;
+  user: any;
+  data: {
+    user: {
+      username: string;
+      role: string;
+    };
+  };
+}
 
-export interface UsePatientRegistrationReturn {
-  registerPatient: (data: PatientRegistrationData) => Promise<void>;
-  errorMessage: string;
-  successMessage: string;
+export interface FetchPatientsSuccessResponse {
+  patients: FetchedPatient[]; 
 }
 
 export interface PatientRegistrationData {
@@ -44,89 +66,80 @@ export interface PatientRegistrationData {
   childmodule_id?: number;
 }
 
-export interface FetchedPatient {
-  id: number;                  
-  first_name: string;         
-  middle_name?: string;       
-  last_name: string;          
-  gender: string;             
+export interface UsePatientRegistrationReturn {
+  registerPatient: (data: PatientRegistrationData) => Promise<void>;
+  errorMessage: string;
+  successMessage: string;
 }
-
-export interface RegistrationSuccessResponse {
-  message: string;
-  patients: Patient[];        
-}
-
-
-export interface FetchPatientsSuccessResponse {
-  patients: FetchedPatient[]; 
-}
-
-
-export interface RegistrationErrorResponse {
-  error: string; 
-  details?: {
-      field?: string;
-      message?: string;
-  };
-}
-
-
-export type FetchPatientsFunction = () => Promise<FetchPatientsSuccessResponse | RegistrationErrorResponse>;
-
 
 export interface User {
-  id: number;
+  id: number | string;
   username: string;
-  first_name: string | null;
-  last_name: string | null;
-  email: string | null;
+  first_name?: string;
+  last_name?: string;
+  email: string;
   role: string;
 }
 
+export interface UserResponse {
+  id: number;
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  role: string;
+}
+
+export interface FetchUsersResponse {
+  users: User[];
+}
+
 export interface UsersFetchSuccessResponse {
-    users: User[];
-    total: number;
+  users: User[];
+  total: number;
 }
 export interface UsersFetchErrorResponse {
-    error: string;
+  error: string;
 }
-export interface Child {
-    id: number;
-    first_name: string;
-    last_name: string;
-    middle_name: string;
-    gender: string;
-    date_of_birth: string;
-    is_deleted: boolean;
-    updated_at: string | null;
-    level_of_stuttering_id: number;
-    childmodule_id: number;
-    created_at: string;
-    parent_id: string;
+
+export interface TherapistResponse {
+  data: {
+    user: {
+      username: string;
+      role: string;
     }
-
-export interface FetchChildrenResponse {
-    child: Child[];
-}
-export interface FetchUsersResponse {
-    users: User[];
+  }
 }
 
-export interface ChildrenResponse {
-  child: Child[];
-}
-
-
-export interface TherapistRegistrationData {
-  firstName: string;
-  lastName: string;
-  email: string;
+export type TherapistRegistrationData = {
+hospital_name: string;
+phone_number: string;
+user: {
   username: string;
+  first_name: string;
+  last_name: string;
   password: string;
-  confirmPassword: string;
-  hospital_name: string;
-  phoneNumber: string;
+  email: string;
+  role: string;
+};
+};
+
+export interface ApiPatient {
+  id: string;
+  first_name: string;
+  middle_name?: string;
+  last_name: string;
+  gender: string;
+}
+
+
+export interface RegistrationSuccessResponse {
+  data: {
+    user: User;
+    hospital_name: string;
+    phone_number: string;
+  };
+  message: string;
 }
 
 export interface RegistrationSuccessResponse {
@@ -146,14 +159,21 @@ export interface RegistrationErrorResponse {
   error: string;
 }
 
+export interface RegistrationSuccessResponse {
+  message: string;
+  patients: Patient[];        
+}
+
+
 export interface TherapistRegistrationState {
   loading: boolean;
+  prev?: string;
   errorMessage: string;
   successMessage: string;
 }
 
 export interface UseTherapistRegistrationReturn {
-  registerTherapist: (data: TherapistRegistrationData) => Promise<void>;
+  registerTherapist: (data: TherapistRegistrationData) => Promise<RegistrationSuccessResponse | undefined>;
   loading: boolean;
   errorMessage: string;
   successMessage: string;
@@ -163,9 +183,10 @@ export type FetchTherapistFunction = (data: TherapistRegistrationData) => Promis
 
 
 export interface AdminRegistrationData {
-firstName: string;
-lastName: string;
-email: string;
+firstName: string,
+lastName: string,
+role: string;
+email:string;
 username: string;
 password: string;
 confirmPassword: string;
@@ -212,6 +233,8 @@ export interface UserProfileData {
   role: string;
 }
 
+export type FetchPatientsFunction = () => Promise<FetchPatientsSuccessResponse | RegistrationErrorResponse>;
+
 export  interface LoginCredentials {
   username: string;
   password: string;
@@ -225,7 +248,6 @@ export type GetUser = {
   email: string | null;
   role: string;
 };
-
 
 
 
