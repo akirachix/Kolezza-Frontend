@@ -132,7 +132,7 @@ const DashboardTable = () => {
           <tbody>
             {currentPageUsers.length > 0 ? (
               currentPageUsers.map((user) => (
-                <tr key={user.id} className={user.id % 2 === 0 ? 'bg-[#D9D9D9]' : 'bg-white'}>
+                <tr key={user.id} className={Number(user.id) % 2 === 0 ? 'bg-[#D9D9D9]' : 'bg-white'}>
                   <td className="px-4 py-4 text-center">{user.id}</td>
                   <td className="px-4 py-4 text-center">{toTitleCase(user.username)}</td> 
                   <td className="px-4 py-4 text-center">{user.email || '-'}</td>

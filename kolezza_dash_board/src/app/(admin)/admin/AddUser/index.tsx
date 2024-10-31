@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { IoIosArrowBack } from "react-icons/io";
 import { useRouter } from 'next/navigation';
-import TherapistRegistration from '../AddTherapist';
+import TherapistRegistration from '@/app/AddTherapist/page';
 import AdminRegistration from '../AddAdmin';
 import Layout from '@/app/Layout';
 

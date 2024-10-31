@@ -1,15 +1,18 @@
+import { NextResponse } from 'next/server';
+
 export async function POST(request: Request) {
-    const baseURL = process.env.BASE_URL; 
-  
-    const { username, password } = await request.json();
-  
-    if (!username || !password) {
-        return new Response('Username and password are missing', {
-            status: 400,
-        });
-    }
-  
+    const baseURL = process.env.BASE_URL;
+
     try {
+        const { username, password } = await request.json();
+
+        if (!username || !password) {
+            return NextResponse.json(
+                { error: 'Username and password are required' },
+                { status: 400 }
+            );
+        }
+
         const response = await fetch(`${baseURL}/api/login/`, {
             method: 'POST',
             headers: {
@@ -17,22 +20,29 @@ export async function POST(request: Request) {
             },
             body: JSON.stringify({ username, password }),
         });
-  
-        if (!response.ok) {
-            const errorData = await response.json();
-            return new Response(errorData.message || 'Login failed', {
-                status: response.status,
-            });
-        }
-  
+
         const data = await response.json();
-        return new Response(JSON.stringify(data), {
-            status: 201,
-        });
+
+        if (!response.ok) {
+            return NextResponse.json(
+                { error: data.message || 'Login failed' },
+                { status: response.status }
+            );
+        }
+
+        // Return user data including role
+        return NextResponse.json({
+            user: {
+                username: data.username,
+                role: data.role
+            },
+            message: 'Login successful'
+        }, { status: 200 });
+
     } catch (error) {
-        return new Response((error as Error).message || 'Internal server error', {
-            status: 500,
-        });
+        return NextResponse.json(
+            { error: 'Internal server error' },
+            { status: 500 }
+        );
     }
-  }
-  
+}
