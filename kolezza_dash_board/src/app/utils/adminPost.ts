@@ -1,24 +1,27 @@
+import { AdminRegistrationData } from './types';
 
-import { AdminRegistrationData, RegistrationSuccessResponse,RegistrationErrorResponse,FetchAdminFunction } from './types';
+const url = '/api/create-admin';
 
-const url = '/api/create_admin';
+export const fetchAdmin = async (data: AdminRegistrationData) => {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
 
-export const fetchAdmin: FetchAdminFunction = async (data: AdminRegistrationData) => {
+        const responseData = await response.json();
 
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
-    
-
-    const responseData: RegistrationSuccessResponse | RegistrationErrorResponse = await response.json();
-
-    if (!response.ok) {
-        throw new Error((responseData as RegistrationErrorResponse).error || 'Registration failed');
+        if (response.ok && responseData.message === "Successful SignUp") {
+            return responseData; 
+        } else {
+            throw new Error(responseData.error || "Unexpected response format");
+        }
+    } catch (error) {
+        console.error("Error in fetchAdmin:", error);
+        return { error: (error as Error).message || "There was an error during sign-up." };
     }
-    
-    return responseData as RegistrationSuccessResponse;
 };
+

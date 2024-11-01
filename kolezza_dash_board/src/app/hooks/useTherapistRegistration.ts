@@ -1,59 +1,44 @@
-import { useState } from "react";
-import {TherapistRegistrationState, UseTherapistRegistrationReturn } from '../utils/types';
+import { useState } from 'react';
+import { TherapistRegistrationData, TherapistResponse } from '@/app/utils/types';
 
-export const useTherapistRegistration = (): UseTherapistRegistrationReturn => {
-  const [state, setState] = useState<TherapistRegistrationState>({
-    loading: false,
-    errorMessage: "",
-    successMessage: "",
-  });
+interface UseTherapistRegistration {
+  registerTherapist: (data: TherapistRegistrationData) => Promise<TherapistResponse>;
+  loading: boolean;
+  error: string | null;
+}
 
-  const registerTherapist = async () => {
-    setState((prev) => ({
-      ...prev,
-      loading: true,
-      errorMessage: "",
-      successMessage: "",
-    }));
+export const useTherapistRegistration = (): UseTherapistRegistration => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const registerTherapist = async (data: TherapistRegistrationData): Promise<TherapistResponse> => {
+    setLoading(true);
+    setError(null);
 
     try {
-      setState((prev) => ({
-        ...prev,
-        successMessage: "Registration successful!",
-      }));
-    } catch (error) {
-      console.error("Registration error:", error);
-      if (error instanceof Error) {
-        if (error.message.includes("Failed to fetch")) {
-          setState((prev) => ({
-            ...prev,
-            errorMessage:
-              "Unable to connect to the server. Please check your internet connection and try again.",
-          }));
-        } else if (error.message.includes("Server configuration error")) {
-          setState((prev) => ({
-            ...prev,
-            errorMessage:
-              "There is a problem with the server configuration. Please contact support.",
-          }));
-        } else {
-          setState((prev) => ({
-            ...prev,
-            errorMessage:
-              (error as Error).message ||
-              "Registration failed. Please try again.",
-          }));
-        }
-      } else {
-        setState((prev) => ({
-          ...prev,
-          errorMessage: "An unexpected error occurred. Please try again.",
-        }));
+      const response = await fetch('/api/therapist_registration', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.error || 'Registration failed');
       }
+
+      return responseData;
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Registration failed';
+      setError(errorMessage);
+      throw new Error(errorMessage);
     } finally {
-      setState((prev) => ({ ...prev, loading: false }));
+      setLoading(false);
     }
   };
 
-  return { registerTherapist, ...state };
+  return { registerTherapist, loading, error };
 };
