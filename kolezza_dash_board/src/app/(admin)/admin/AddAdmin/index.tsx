@@ -1,43 +1,40 @@
-
 'use client';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { FaUser, FaEnvelope, FaHospital, FaLock } from 'react-icons/fa';
-import { MdPhone } from "react-icons/md";
-import { useTherapistRegistration } from '@/app/hooks/useTherapistRegistration';
-import { TherapistRegistrationData } from '@/app/utils/types';
+import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
+import { useAdminRegistration } from '@/app/hooks/useAdminRegistration';
+import { AdminRegistrationData } from '@/app/utils/types';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
-const therapistSchema = z.object({
-  firstName: z.string().min(1, "First name is required"),
-  lastName: z.string().min(1, "Last name is required"),
-  email: z.string().email("Invalid email address"),
-  username: z.string().min(3, "Username must be at least 3 characters"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  confirmPassword: z.string().min(8, "Confirm password is required"),
-  hospital_name: z.string().min(1, "Hospital name is required"),
-  phoneNumber: z.string().min(9, "Phone number is required")
+const adminSchema = z.object({
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+  email: z.string().email('Invalid email address'),
+  username: z.string().min(3, 'Username must be at least 3 characters'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
+  confirmPassword: z.string().min(8, 'Confirm password is required'),
+  role: z.string().default('superadmin') 
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
-  path: ["confirmPassword"],
+  path: ['confirmPassword'],
 });
 
-const TherapistRegistration = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof therapistSchema>>({
-    resolver: zodResolver(therapistSchema),
+const AdminRegistration = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof adminSchema>>({
+    resolver: zodResolver(adminSchema),
   });
 
-  const { registerTherapist, loading } = useTherapistRegistration();
-  const onSubmit = async (data: TherapistRegistrationData) => {
+  const { registerAdmin, loading, errorMessage, successMessage } = useAdminRegistration();
+
+  const onSubmit = async (data: AdminRegistrationData) => {
     try {
-      await registerTherapist(data);
-      toast.success('Registration successful!');
+      await registerAdmin(data);
+      toast.success('Admin registration successful!');
     } catch (error) {
-      toast.error('Registration failed. Please try again.');
+      toast.error('Admin registration failed. Please try again.');
     }
   };
 
@@ -45,7 +42,10 @@ const TherapistRegistration = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-14 p-8 space-y-6 font-nunito">
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-16 p-8 space-y-6 font-nunito">
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+        {successMessage && <p className="text-green-500">{successMessage}</p>}
+
         <div className="flex space-x-4">
           <div className="flex-1 relative">
             <label className="block text-lg font-medium mb-1">First Name</label>
@@ -75,7 +75,6 @@ const TherapistRegistration = () => {
           </div>
         </div>
 
-        {/* Email */}
         <div className="relative">
           <label className="block text-lg font-medium mb-1">Email</label>
           <div className="relative">
@@ -90,36 +89,6 @@ const TherapistRegistration = () => {
           {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
         </div>
 
-        <div className="flex space-x-4">
-          <div className="flex-1 relative">
-            <label className="block text-lg font-medium mb-1">Hospital Name</label>
-            <div className="relative">
-              <input
-                {...register('hospital_name')}
-                type="text"
-                placeholder="Enter hospital name"
-                className={inputClassName}
-              />
-              <FaHospital className="absolute left-3 top-1/2 transform -translate-y-1/2 text-customDarkBlue" />
-            </div>
-            {errors.hospital_name && <p className="text-red-500 text-xs mt-1">{errors.hospital_name.message}</p>}
-          </div>
-          <div className="flex-1 relative">
-            <label className="block text-lg font-medium mb-1">Phone Number</label>
-            <div className="relative">
-              <input
-                {...register('phoneNumber')}
-                type="tel"
-                placeholder="Enter phone number"
-                className={inputClassName}
-              />
-              <MdPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-customDarkBlue" />
-            </div>
-            {errors.phoneNumber && <p className="text-red-500 text-xs mt-1">{errors.phoneNumber.message}</p>}
-          </div>
-        </div>
-
-
         <div className="relative">
           <label className="block text-lg font-medium mb-1">Username</label>
           <div className="relative">
@@ -133,7 +102,6 @@ const TherapistRegistration = () => {
           </div>
           {errors.username && <p className="text-red-500 text-xs mt-1">{errors.username.message}</p>}
         </div>
-
 
         <div className="flex space-x-4">
           <div className="flex-1 relative">
@@ -164,10 +132,15 @@ const TherapistRegistration = () => {
           </div>
         </div>
 
+        {/* Hidden role input */}
+        <input type="hidden" {...register('role')} value="admin" />
+
         <div className="mt-6">
           <button
             type="submit"
-            className={`w-40 bg-customDarkBlue text-white p-4 mx-auto flex justify-center rounded-lg ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-customBlue hover:text-customDarkBlue'}`}
+            className={`w-40 bg-customDarkBlue text-white p-4 mx-auto flex justify-center rounded-lg ${
+              loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-customBlue hover:text-customDarkBlue'
+            }`}
             disabled={loading}
           >
             {loading ? 'Saving...' : 'Save'}
@@ -179,4 +152,4 @@ const TherapistRegistration = () => {
   );
 };
 
-export default TherapistRegistration;
+export default AdminRegistration;

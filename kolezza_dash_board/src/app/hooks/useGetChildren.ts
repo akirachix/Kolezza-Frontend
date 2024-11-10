@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { fetchAllChildren } from "@/app/utils/fetchChild";
 import { FetchChildrenResponse, Child } from "@/app/utils/types";
 
+
 export const useChildren = () => {
   const [activePatients, setActivePatients] = useState<number>(0);
   const [inactivePatients, setInactivePatients] = useState<number>(0);
