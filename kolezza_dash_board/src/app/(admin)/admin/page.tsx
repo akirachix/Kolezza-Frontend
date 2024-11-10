@@ -34,7 +34,7 @@ const StatBox: React.FC<StatBoxProps> = ({ title, value, color, isNH }) => {
 
 const DashboardTable = () => {
   const { users, loading: loadingUsers, error: errorUsers } = useUsers(); 
-  const { loading: loadingPatients, error: errorPatients } = useChildren();
+  const { loading: loadingPatients} = useChildren();
   const [query, setQuery] = useState('');
   const usersPerPage = 5; 
   const [currentPage, setCurrentPage] = useState(1);
