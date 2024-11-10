@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { setCookie, getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
-import { usePathname } from 'next/navigation'; // Import usePathname
+import { usePathname } from 'next/navigation'; 
 import Image from "next/image";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { userLogin } from "../utils/fetchLogin";
@@ -29,11 +29,11 @@ function LoginPage() {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-  const currentPath = usePathname(); // Get current pathname
+  const currentPath = usePathname(); 
 
   useEffect(() => {
     const token = getCookie('token');
-    if (token && currentPath === "/login") { // Check if on the login page
+    if (token && currentPath === "/login") { 
       const role = getCookie("userRole");
       if (role === "admin") {
         router.push("/admin");

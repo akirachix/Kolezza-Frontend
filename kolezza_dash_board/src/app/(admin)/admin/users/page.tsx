@@ -4,8 +4,7 @@ import DashboardTable from "../page";
 const Users = () => {
     return(
         <Layout>
-        <DashboardTable/>
-          
+        <DashboardTable/>    
         </Layout>
     )
 }

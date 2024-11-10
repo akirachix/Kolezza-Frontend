@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { fetchChildren, Child } from '../utils/fetchChildren';
+import { useState, useEffect } from "react";
+import { fetchChildren, Child } from "../utils/fetchChild";
 export interface ChildData {
   length: number;
   weeklyCount: number;
@@ -21,12 +21,18 @@ export const useFetchChildren = () => {
         setChildren(data);
         setChildData({
           length: data.length,
-          weeklyCount: data.filter(c => c.updated_at && isWithinLast(c.updated_at, 7)).length,
-          monthlyCount: data.filter(c => c.updated_at && isWithinLast(c.updated_at, 30)).length,
-          activeCount: data.filter(c => c.updated_at && isWithinLast(c.updated_at, 28)).length,
+          weeklyCount: data.filter(
+            (c) => c.updated_at && isWithinLast(c.updated_at, 7)
+          ).length,
+          monthlyCount: data.filter(
+            (c) => c.updated_at && isWithinLast(c.updated_at, 30)
+          ).length,
+          activeCount: data.filter(
+            (c) => c.updated_at && isWithinLast(c.updated_at, 28)
+          ).length,
         });
       } catch (error) {
-        console.error('Error loading children data:', error);
+        console.error("Error loading children data:", error);
       }
     };
     fetchData();

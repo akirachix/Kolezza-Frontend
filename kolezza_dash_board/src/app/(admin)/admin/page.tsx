@@ -57,7 +57,6 @@ const DashboardTable = () => {
 
   if (loadingUsers || loadingPatients) return <p>Loading...</p>;
   if (errorUsers) return <p>Error fetching users: {errorUsers}</p>;
-  if (errorPatients) return <p>Error fetching patients: {errorPatients}</p>;
 
 
   const filteredUsers = users.filter(user =>

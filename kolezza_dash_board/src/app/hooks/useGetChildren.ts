@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { fetchAllChildren } from '@/app/utils/fetchChildren';
-import { FetchChildrenResponse, Child } from '@/app/utils/types';
+import { useState, useEffect } from "react";
+import { fetchAllChildren } from "@/app/utils/fetchChild";
+import { FetchChildrenResponse, Child } from "@/app/utils/types";
 
 export const useChildren = () => {
   const [activePatients, setActivePatients] = useState<number>(0);
@@ -13,20 +13,22 @@ export const useChildren = () => {
       setLoading(true);
       setError(null);
       try {
-        console.log('Fetching children from API...');
+        console.log("Fetching children from API...");
         const response: FetchChildrenResponse = await fetchAllChildren();
-        console.log('API response:', response);
+        console.log("API response:", response);
 
-        const children: Child [] = response?.child ?? [];
+        const children: Child[] = response?.child ?? [];
 
-        const active = children.filter(child => !child.is_deleted).length;
-        const inactive = children.filter(child => child.is_deleted).length;
+        const active = children.filter((child) => !child.is_deleted).length;
+        const inactive = children.filter((child) => child.is_deleted).length;
 
         setActivePatients(active);
         setInactivePatients(inactive);
       } catch (err) {
-        console.error('Error fetching children:', err);
-        setError(err instanceof Error ? err.message : 'An unexpected error occurred.');
+        console.error("Error fetching children:", err);
+        setError(
+          err instanceof Error ? err.message : "An unexpected error occurred."
+        );
       } finally {
         setLoading(false);
       }
