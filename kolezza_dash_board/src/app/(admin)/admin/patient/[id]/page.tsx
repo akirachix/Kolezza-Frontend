@@ -136,7 +136,6 @@ const PatientPage = ({ params }: { params: { id: string } }) => {
     data.forEach((entry) => {
       const date = new Date(entry.ts);
       
-      // Only process entries from October onwards
       if (date.getTime() < startOfOctober) return; 
 
       let key;
@@ -217,6 +216,7 @@ const PatientPage = ({ params }: { params: { id: string } }) => {
         <div className="w-full mb-8">
           <PatientDetails childId={id} />
         </div>
+        <h1 className="text-[2rem]">Progress of the Child Overtime</h1>
         <div className="flex justify-center w-full">
           {id === "2" ? (
             <div className="w-full max-w-7xl px-4">

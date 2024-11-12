@@ -2,6 +2,13 @@ import { IoIosArrowBack } from 'react-icons/io';
 import { useRouter } from 'next/navigation';
 import useGetChildData from '@/app/hooks/useGetChildData';
 
+const toTitleCase = (str: string) => {
+  return str
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+};
+
 const PatientDetails = ({ childId }: { childId: string }) => {
   const { childData, loading, error } = useGetChildData(childId);
   const router = useRouter();
@@ -23,7 +30,7 @@ const PatientDetails = ({ childId }: { childId: string }) => {
   <IoIosArrowBack className="text-[2.5rem] pt-4" onClick={() => router.back()} />
   <div className="flex flex-wrap nhm:gap-[3rem] nh:gap-[2rem] nhm:ml-6 nh:ml-5 gap-20 ml-[8rem] nhm:text-[1.15rem] nh:text-[1rem] text-[1.5rem] nhm:pr-16 nh:pr-1 mt-7 mb-10">
     {[
-      { label: 'Name', value: `${childData.first_name} ${childData.last_name}` },
+      { label: 'Name', value: `${toTitleCase(childData.first_name)} ${toTitleCase(childData.last_name)}` },
       { label: 'Age', value: `${calculateAge(childData.date_of_birth)} years` },
       { label: 'Current Module', value: childData.id },
     ].map((info, index) => (
