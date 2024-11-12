@@ -1,5 +1,5 @@
+import { fetchTherapists, Therapist } from '@/app/utils/fetchTherapists';
 import { useState, useEffect } from 'react';
-import { fetchTherapists, Therapist } from '../utils/fetchTherapists';
 export interface TherapistData {
   length: number;
   weeklyCount: number;

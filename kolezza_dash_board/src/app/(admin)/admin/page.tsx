@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Search, Edit, Trash } from 'lucide-react'; 
-import { useChildren } from '@/app/hooks/useGetChildren';
-import { useUsers } from '@/app/hooks/useGetUsers'; 
+import { useChildren } from '@/app/components/hooks/useGetChildren';
 import Link from 'next/link';
 import { deleteUser, updateUser } from '@/app/utils/fetchUsers';
 import { User } from '@/app/utils/types';
+import { useUsers } from '@/app/components/hooks/useGetUsers';
 
 type StatBoxProps = {
   title: string;

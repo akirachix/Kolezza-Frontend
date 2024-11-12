@@ -1,6 +1,6 @@
 import { IoIosArrowBack } from 'react-icons/io';
 import { useRouter } from 'next/navigation';
-import useGetChildData from '@/app/hooks/useGetChildData';
+import useGetChildData from '../hooks/useGetChildData';
 
 const toTitleCase = (str: string) => {
   return str

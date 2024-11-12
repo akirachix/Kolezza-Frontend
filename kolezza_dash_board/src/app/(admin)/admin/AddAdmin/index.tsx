@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
-import { useAdminRegistration } from '@/app/hooks/useAdminRegistration';
+import { useAdminRegistration } from '@/app/components/hooks/useAdminRegistration';
 import { AdminRegistrationData } from '@/app/utils/types';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
