@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { fetchAllChildren } from '@/app/utils/fetchChildren';
-import { FetchChildrenResponse,Child } from '../utils/types';
+import { Child, fetchAllChildren } from '@/app/utils/fetchChildren';
+import { FetchChildrenResponse } from '@/app/utils/types';
 
 export const useChildren = () => {
   const [activePatients, setActivePatients] = useState<number>(0);

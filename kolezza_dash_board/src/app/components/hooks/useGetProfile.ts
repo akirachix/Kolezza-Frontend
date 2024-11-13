@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { defaultUserProfile, getProfile, updateProfile } from "../utils/fetchProfile";
 import z from "zod";
-import { UserProfileData } from "../utils/types";
+import { UserProfileData } from "@/app/utils/types";
+import { defaultUserProfile, getProfile, updateProfile } from "@/app/utils/fetchProfile";
 
 export const useGetUserProfile = (userId: string) => {
   const [loading, setLoading] = useState(false);

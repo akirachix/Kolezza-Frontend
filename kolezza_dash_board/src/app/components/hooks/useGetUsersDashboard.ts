@@ -1,5 +1,5 @@
+import { fetchUsers } from "@/app/utils/fetchUsers";
 import { useState, useEffect } from "react";
-import { fetchUsers } from "../utils/fetchUsers";
 
 type UserRole = "speech_therapist" | "superadmin";
 

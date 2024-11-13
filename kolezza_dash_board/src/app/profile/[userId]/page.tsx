@@ -3,11 +3,11 @@
 import React, { useState, useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { AiOutlineLogout, AiOutlineEdit } from "react-icons/ai"; 
-import { useGetUserProfile } from "@/app/hooks/useGetProfile";
 import Sidebar from "@/app/Sidebar";
 import { deleteCookie } from "cookies-next"; 
 import { useRouter } from "next/navigation"; 
 import Image from "next/image";
+import { useGetUserProfile } from "@/app/components/hooks/useGetProfile";
 
 type Params = {
   userId: string;

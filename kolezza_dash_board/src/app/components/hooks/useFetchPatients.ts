@@ -1,6 +1,6 @@
+import { fetchPatients } from "@/app/utils/fetchPatients";
+import { FetchedPatient } from "@/app/utils/types";
 import { useState, useEffect } from "react";
-import { FetchedPatient } from "../utils/types";
-import { fetchPatients } from "../utils/fetchPatients";
 
 const useFetchPatients = () => {
   const [patients, setPatients] = useState<FetchedPatient[]>([]);

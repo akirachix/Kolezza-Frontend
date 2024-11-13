@@ -60,7 +60,7 @@ const AddPatients = () => {
     <Layout>
       <div className="bg-white">
         <div className="px-10 nh:px-4">
-          <Link href="/admin/PatientList/">
+          <Link href="/patients/">
             <ChevronLeft className="w-20 h-10 mr-10 cursor-pointer nh:w-12 nh:h-8" />
           </Link>
           <h2 className="text-4xl nh:text-2xl nh:ml-6 font-semibold">Add a new Patient</h2>

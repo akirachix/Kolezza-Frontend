@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useTherapistRegistration } from "../hooks/useTherapistRegistration";
+import { useTherapistRegistration } from "../components/hooks/useTherapistRegistration";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TherapistRegistrationData, TherapistResponse } from "@/app/utils/types";
