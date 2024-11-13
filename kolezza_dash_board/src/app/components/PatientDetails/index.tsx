@@ -26,7 +26,7 @@ const PatientDetails = ({ childId }: { childId: string }) => {
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    <div className="bg-customGreen rounded-[10px] ml-0 nh:ml-[-0.5rem] -mt-8 pb-12 nh:pb-8 px-4 md:px-8 lg:px-16 nh:px-9">
+    <div className="bg-customGreen rounded-[10px] nh:ml-[-0.5rem] mt-[-20px] pb-12 nh:pb-8 pr-4 md:px-8 lg:px-16 nh:px-9 ml-[-16px]">
   <IoIosArrowBack className="text-[2.5rem] pt-4" onClick={() => router.back()} />
   <div className="flex flex-wrap nhm:gap-[3rem] nh:gap-[2rem] nhm:ml-6 nh:ml-5 gap-20 ml-[8rem] nhm:text-[1.15rem] nh:text-[1rem] text-[1.5rem] nhm:pr-16 nh:pr-1 mt-7 mb-10">
     {[

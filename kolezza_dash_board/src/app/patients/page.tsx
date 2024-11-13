@@ -7,6 +7,7 @@ import Link from "next/link";
 import Layout from "@/app/Layout";
 import useFetchPatients from "../components/hooks/useFetchPatients";
 
+
 const toTitleCase = (str: string) => {
   return str
     .split(" ")
@@ -51,7 +52,7 @@ const PatientDashboard = () => {
 
   return (
     <Layout>
-      <div className="flex w-full nh:w-20 h-screen mt-10">
+      <div className="flex w-full nh:w-20 h-screen mt-10 mx-4">
         <div className="flex-1 p-0 md:p-0 lg:p-0 mb-10">
           <div className="flex flex-col md:flex-row justify-between items-center mb-6">
             <div className="relative w-full mb-4 md:mb-0">

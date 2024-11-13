@@ -13,7 +13,6 @@ import {
 } from "chart.js";
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip);
-
 interface ProgressData {
   ts: number;
   values: {
@@ -24,7 +23,6 @@ interface ProgressData {
     elapsed_time: number;
   };
 }
-
 const TimeFilter = {
   DAILY: "daily",
   WEEKLY: "weekly",
@@ -38,13 +36,11 @@ const timeFilterOptions = [
   { value: TimeFilter.WEEKLY, label: "Weekly Average" },
   { value: TimeFilter.MONTHLY, label: "Monthly Average" },
 ];
-
 const PatientPage = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const [progressData, setProgressData] = useState<ProgressData[]>([]);
   const [timeFilter, setTimeFilter] = useState<TimeFilterType>(TimeFilter.DAILY);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
   useEffect(() => {
     if (id === "2") {
       const childData: ProgressData[] = [
@@ -156,7 +152,6 @@ const PatientPage = ({ params }: { params: { id: string } }) => {
            key = date.toLocaleDateString('en-US', { month:'long', year:'numeric' });
            break;
        }
-
        if (!grouped.has(key)) grouped.set(key,{ totalTime :0 , count :0 });
        const current = grouped.get(key);
        current.totalTime += entry.values.elapsed_time;
@@ -189,7 +184,6 @@ const PatientPage = ({ params }: { params: { id: string } }) => {
       borderWidth: 2,
     }],
   };
-
   const chartOptions = {
     responsive: true,
     scales: {
@@ -212,11 +206,11 @@ const PatientPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <Layout>
-      <div className="flex flex-col items-center h-full py-8">
+      <div className="flex flex-col items-center  pb-6">
         <div className="w-full mb-8">
           <PatientDetails childId={id} />
         </div>
-        <h1 className="text-[2rem]">Progress of the Child Overtime</h1>
+        <h1 className="text-[2rem] mb-2">Progress Of A Child Overtime</h1>
         <div className="flex justify-center w-full">
           {id === "2" ? (
             <div className="w-full max-w-7xl px-4">
@@ -234,7 +228,6 @@ const PatientPage = ({ params }: { params: { id: string } }) => {
                     </svg>
                   </div>
                 </button>
-
                 {isDropdownOpen && (
                   <div className="absolute z-10 w-48 mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
                     {timeFilterOptions.map((option) => (
@@ -254,7 +247,6 @@ const PatientPage = ({ params }: { params: { id: string } }) => {
                   </div>
                 )}
               </div>
-
               <div className="h-[500px] bg-white p-4 rounded-lg shadow">
                 <Line data={chartData} options={chartOptions} />
               </div>

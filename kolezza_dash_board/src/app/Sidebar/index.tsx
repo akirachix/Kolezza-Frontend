@@ -43,7 +43,7 @@ const Sidebar = () => {
             <li key={item.name}>
               <Link
                 href={item.href}
-                onClick={() => setActiveLink(item.href)}
+                onClick={() => setActiveLink(item.href)} 
                 className={`flex items-center px-6 py-3 ${
                   activeLink === item.href ? 'bg-white text-customDarkBlue' : 'hover:bg-white hover:text-customDarkBlue'
                 } transition-colors group`}
@@ -58,7 +58,7 @@ const Sidebar = () => {
             <li>
               <Link
                 href="admin/users"
-                onClick={() => setActiveLink('admin/users')}
+                onClick={() => setActiveLink('admin/users')} 
                 className={`flex items-center px-6 py-3 ${
                   activeLink === 'admin/users' ? 'bg-white text-customDarkBlue' : 'hover:bg-white hover:text-customDarkBlue'
                 } transition-colors group`}
