@@ -1,5 +1,5 @@
+import fetchProgressData from '@/app/utils/fetchProgressData';
 import { useState, useEffect } from 'react';
-import fetchProgressData from '../utils/fetchProgressData';
 
 const useGetProgressData = (childId: string) => {
   const [progressData, setProgressData] = useState({ labels: [], values: [] });

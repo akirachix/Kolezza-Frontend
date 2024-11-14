@@ -1,5 +1,5 @@
+import fetchChildData from '@/app/utils/fetchPatientData';
 import { useState, useEffect } from 'react';
-import fetchChildData from '../utils/fetchPatientData';
 
 interface Patient {
   id: number;

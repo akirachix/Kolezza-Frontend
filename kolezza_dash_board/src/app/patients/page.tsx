@@ -2,10 +2,18 @@
 
 import React, { useState } from "react";
 import { Search, Plus } from "lucide-react";
-import useFetchPatients from "../hooks/useFetchPatients";
 import { FetchedPatient } from "../utils/types";
 import Link from "next/link";
 import Layout from "@/app/Layout";
+import useFetchPatients from "../components/hooks/useFetchPatients";
+
+
+const toTitleCase = (str: string) => {
+  return str
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+};
 
 const PatientDashboard = () => {
   const { patients, loading, error } = useFetchPatients();
@@ -44,8 +52,8 @@ const PatientDashboard = () => {
 
   return (
     <Layout>
-      <div className="flex w-full nh:w-20 h-screen">
-        <div className="flex-1 p-0 md:p-0 lg:p-0">
+      <div className="flex w-full nh:w-20 h-screen mt-10 mx-4">
+        <div className="flex-1 p-0 md:p-0 lg:p-0 mb-10">
           <div className="flex flex-col md:flex-row justify-between items-center mb-6">
             <div className="relative w-full mb-4 md:mb-0">
               <input
@@ -84,9 +92,6 @@ const PatientDashboard = () => {
               <thead>
                 <tr className="bg-lightGreen text-white md:text-lg">
                   <th className="py-3 nh:py-[1rem] nh:px-[2.3rem]  md:py-4 px-4 md:px-6 lg:px-4 xl:px-6 text-left rounded-l-lg border-2 nh:text-[20px]">
-                    Patient ID
-                  </th>
-                  <th className="py-3 nh:py-[1rem] nh:px-[2.3rem] md:py-4 px-4 md:px-6 lg:px-4 xl:px-6 text-left border-2 nh:text-[20px]">
                     First Name
                   </th>
                   <th className="py-3 nh:py-[1rem] nh:px-[2.3rem] md:py-4 px-4 md:px-6 lg:px-4 xl:px-6 text-left border-2 nh:text-[20px]">
@@ -113,17 +118,14 @@ const PatientDashboard = () => {
                         href={`/admin/patient/${patient.id}`}
                         className="contents"
                       >
-                        <td className="py-3 md:py-4 px-4 md:px-6 lg:px-4 xl:px-6 rounded-l-lg nh:text-[20px]">
-                          {patient.id}
+                        <td className="py-3 md:py-4 px-4 md:px-6 lg:px-4 xl:px-6 nh:text-[20px]">
+                          {toTitleCase(patient.first_name || "N/A")}
                         </td>
                         <td className="py-3 md:py-4 px-4 md:px-6 lg:px-4 xl:px-6 nh:text-[20px]">
-                          {patient.first_name || "N/A"}
+                          {toTitleCase(patient.middle_name || "N/A")}
                         </td>
                         <td className="py-3 md:py-4 px-4 md:px-6 lg:px-4 xl:px-6 nh:text-[20px]">
-                          {patient.middle_name || "N/A"}
-                        </td>
-                        <td className="py-3 md:py-4 px-4 md:px-6 lg:px-4 xl:px-6 nh:text-[20px]">
-                          {patient.last_name || "N/A"}
+                          {toTitleCase(patient.last_name || "N/A")}
                         </td>
                         <td className="py-3 md:py-4 px-4 md:px-6 lg:px-4 xl:px-6 rounded-r-lg nh:text-[20px]">
                           {patient.gender || "N/A"}
