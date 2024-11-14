@@ -1,5 +1,5 @@
+import UseSearchUsers from "@/app/utils/searchUsers";
 import { useState } from "react";
-import UseSearchUsers from "../utils/searchUsers";
 
 export const useSearch = () => {
   const [query, setQuery] = useState("");

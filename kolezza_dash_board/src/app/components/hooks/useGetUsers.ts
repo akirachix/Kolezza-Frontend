@@ -1,6 +1,6 @@
+import { fetchUsers } from "@/app/utils/fetchUsers";
+import { FetchUsersResponse, User } from "@/app/utils/types";
 import { useState, useEffect } from "react";
-import { fetchUsers } from "../utils/fetchUser";
-import { User, FetchUsersResponse } from "../utils/types";
 
 export const useUsers = () => {
   const [state, setState] = useState({

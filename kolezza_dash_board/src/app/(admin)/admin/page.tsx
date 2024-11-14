@@ -1,9 +1,11 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Search } from 'lucide-react';
-import { useChildren } from '@/app/hooks/useGetChildren';
-import { useUsers } from '@/app/hooks/useGetUsers'; 
+import { Search, Edit, Trash } from 'lucide-react'; 
+import { useChildren } from '@/app/components/hooks/useGetChildren';
 import Link from 'next/link';
+import { deleteUser, updateUser } from '@/app/utils/fetchUsers';
+import { User } from '@/app/utils/types';
+import { useUsers } from '@/app/components/hooks/useGetUsers';
 
 type StatBoxProps = {
   title: string;
@@ -31,12 +33,16 @@ const StatBox: React.FC<StatBoxProps> = ({ title, value, color, isNH }) => {
 };
 
 const DashboardTable = () => {
-  const { users, loading: loadingUsers, error: errorUsers } = useUsers(); // Fetch all users
-  const { loading: loadingPatients, error: errorPatients } = useChildren();
+  const { users, loading: loadingUsers, error: errorUsers } = useUsers(); 
+  const { loading: loadingPatients} = useChildren();
   const [query, setQuery] = useState('');
   const usersPerPage = 5; 
   const [currentPage, setCurrentPage] = useState(1);
   const [isNH, setIsNH] = useState(false);
+  const [editingUser, setEditingUser] = useState<{ id: string | number; username: string; email: string; role: string } | null>(null);
+  
+  const [usersList, setUsersList] = useState(users);
+  const [successMessage, setSucessMessage] = useState<{ [key: string] : string}>({});
 
   useEffect(() => {
     const handleResize = () => {
@@ -55,20 +61,21 @@ const DashboardTable = () => {
     setCurrentPage(1); 
   }, [query]);
 
+  useEffect(() => {
+    setUsersList(users);
+  }, [users]);
+
   if (loadingUsers || loadingPatients) return <p>Loading...</p>;
   if (errorUsers) return <p>Error fetching users: {errorUsers}</p>;
-  if (errorPatients) return <p>Error fetching patients: {errorPatients}</p>;
+  // if (errorPatients) return <p>Error fetching patients: {errorPatients}</p>;
 
-
-  const filteredUsers = users.filter(user =>
+  const filteredUsers = usersList.filter(user =>
     [user.first_name, user.last_name, user.username].some(field =>
       field && field.toLowerCase().includes(query.toLowerCase())
     )
   );
 
-
   const totalUsers = filteredUsers.length;
-
 
   const startIndex = (currentPage - 1) * usersPerPage;
   const currentPageUsers = filteredUsers.slice(startIndex, startIndex + usersPerPage);
@@ -83,32 +90,60 @@ const DashboardTable = () => {
       .join(' '); 
   };
 
+  const handleDelete = async (id: string | number) => {
+    try {
+      await deleteUser(String(id)); 
+      setSucessMessage(prev => ({ ...prev, [id]: 'User successfully deleted!' })); // Change here
+      setCurrentPage(currentPage => Math.max(1, currentPage - 1)); 
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
+  };
+
+  const handleEdit = (user: User) => {
+    setEditingUser({ id: user.id, username: user.username, email: user.email || '', role: user.role });
+  };
+
+
+  const handleUpdate = async (user: User) => {
+    try {
+      await updateUser(String(user.id), { username: user.username, email: user.email, role: user.role });
+      setSucessMessage(prev => ({ ...prev, [user.id]: 'User Updated Successfully' })); // Change here
+   
+      setUsersList(prevUsers =>
+        prevUsers.map(u => (u.id === user.id ? { ...u, ...user } : u))
+      );
+      
+      setEditingUser(null); 
+    } catch (error) {
+      console.error('Error updating user:', error);
+    }
+  };
+
   return (
     <div className="flex flex-col p-6 mt-8 bg-gray-50 min-h-screen ml-8">
       <div className="flex ml-7 justify-between mb-6 mt-[-20px]">
-<div className="flex items-center w-full sm:w-1/2 bg-white rounded-lg p-9 gap-x-20"> 
-  <div className="relative flex-grow"> 
-    <Search className="absolute left-3 top-2 text-gray-500" />
-    <input
-      type="text"
-      placeholder="Search users here..."
-      className="border border-[#90BD31] p-2 pl-10 rounded-lg w-full"
-      value={query}
-      onChange={(e) => setQuery(e.target.value)}
-    />
-  </div>
+        <div className="flex items-center w-full sm:w-1/2 bg-white rounded-lg p-9 gap-x-20"> 
+          <div className="relative flex-grow"> 
+            <Search className="absolute left-3 top-2 text-gray-500" />
+            <input
+              type="text"
+              placeholder="Search users here..."
+              className="border border-[#90BD31] p-2 pl-10 rounded-lg w-full"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </div>
 
-  <div> 
-    <Link href="/components/AddUser">
-    <button
-      className="border border-[#90BD31] text-[#90BD31] rounded-lg px-4 py-2 bg-transparent"
-    >
-      Add User
-    </button>
-    </Link>
-  </div>
-</div>
-     </div>
+          <div> 
+            <Link href="/components/AddUser">
+              <button className="border border-[#90BD31] text-[#90BD31] rounded-lg px-4 py-2 bg-transparent">
+                Add User
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
 
       <div className={`grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 mb-6 ml-6
         ${isNH ? 'nh:grid-cols-3 nh:gap-2 nh:w-full nh:ml-[20px]' : 'lg:justify-center lg:gap-52 lg:w-[900px] lg:ml-[90px]'}
@@ -127,6 +162,7 @@ const DashboardTable = () => {
               <th className="px-2 py-3 text-center border border-black">Email</th>
               <th className="px-2 py-3 text-center border border-black">Status</th>
               <th className="px-2 py-3 text-center border border-black">Roles</th>
+              <th className="px-2 py-3 text-center border border-black">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -134,15 +170,76 @@ const DashboardTable = () => {
               currentPageUsers.map((user) => (
                 <tr key={user.id} className={Number(user.id) % 2 === 0 ? 'bg-[#D9D9D9]' : 'bg-white'}>
                   <td className="px-4 py-4 text-center">{user.id}</td>
-                  <td className="px-4 py-4 text-center">{toTitleCase(user.username)}</td> 
-                  <td className="px-4 py-4 text-center">{user.email || '-'}</td>
+                  <td className="px-4 py-4 text-center">
+                    {editingUser && editingUser.id === user.id ? (
+                      <>
+                        <input
+                          type="text"
+                          value={editingUser.username}
+                          onChange={(e) => setEditingUser({ ...editingUser, username: e.target.value })}
+                          className="border border-gray-300 rounded p-1"
+                        />
+                      </>
+                    ) : (
+                      toTitleCase(user.username)
+                    )}
+                  </td> 
+                  <td className="px-4 py-4 text-center">
+                    {editingUser && editingUser.id === user.id ? (
+                      <>
+                        <input
+                          type="email"
+                          value={editingUser.email}
+                          onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
+                          className="border border-gray-300 rounded p-1"
+                        />
+                      </>
+                    ) : (
+                      user.email || '-'
+                    )}
+                  </td>
                   <td className="px-4 py-4 text-center">{user.email ? 'Active' : 'Inactive'}</td> 
-                  <td className="px-4 py-4 text-center">{user.role}</td>
+                  <td className="px-4 py-4 text-center">
+                    {editingUser && editingUser.id === user.id ? (
+                      <>
+                        <input
+                          type="text"
+                          value={editingUser.role}
+                          onChange={(e) => setEditingUser({ ...editingUser, role: e.target.value })}
+                          className="border border-gray-300 rounded p-1"
+                        />
+                      </>
+                    ) : (
+                      user.role
+                    )}
+                  </td>
+                  <td className="px-4 py-4 text-center">
+                    {editingUser && editingUser.id === user.id ? (
+                      <>
+                        <button onClick={() => handleUpdate(editingUser)} className="text-green-500 ml-2">Save</button>
+                        <button onClick={() => setEditingUser(null)} className="text-red-500 ml-2">Cancel</button>
+                      </>
+                    ) : (
+                      <>
+                        <button onClick={() => handleEdit(user)} className="text-blue-500 mr-2">
+                          <Edit className="w-5 h-5" />
+                        </button>
+                        <button onClick={() => handleDelete(user.id.toString())} className="text-red-500">
+                          <Trash className="w-5 h-5" />
+                        </button>
+                      </>
+                    )}
+                  </td>
+                  {successMessage[user.id] && (
+        <div className="bg-green-100 text-green-800 p-4 rounded-lg mb-4">
+          {successMessage[user.id]}
+        </div>
+      )}
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={5} className="px-6 py-4 text-center text-red-500">No such user found.</td>
+                <td colSpan={6} className="px-6 py-4 text-center text-red-500">No such user found.</td>
               </tr>
             )}
           </tbody>
@@ -161,7 +258,7 @@ const DashboardTable = () => {
               </li>
             ))}
           </ul>
-          <div className="text-center mt-1">
+          <div className="ml-4 text-center">
             <p>Total Users: {totalUsers}</p>
           </div>
         </nav>

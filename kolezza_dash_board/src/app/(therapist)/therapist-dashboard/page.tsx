@@ -2,15 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale} from 'chart.js';
 import { Doughnut, Bar } from 'react-chartjs-2';
-// import { useFetchTherapists } from '../hooks/useFetchTherapists';
-import { useFetchTherapists } from '@/app/hooks/useFetchTherapists';
-// import { useFetchChildren } from '../hooks/useFetchChildren';
-import { useFetchChildren } from '@/app/hooks/useFetchChildren';
-// import Layout from '../Layout';
-// import Layout from '@/app/Layout';
+// import { useFetchTherapists } from '@/app/hooks/useFetchTherapists';
+// import { useFetchChildren } from '@/app/hooks/useFetchChildren';
 import TherapistLayout from '../TherapistLayout';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { ChartOptions} from 'chart.js';
+import { useFetchTherapists } from '@/app/components/hooks/useFetchTherapists';
+import { useFetchChildren } from '@/app/components/hooks/useFetchChildren';
 
 ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartDataLabels);
 
@@ -265,5 +263,3 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
-
-
