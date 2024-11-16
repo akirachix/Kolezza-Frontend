@@ -148,7 +148,7 @@ const PatientPage = ({ params }: { params: { id: string } }) => {
                 <Line
                   dataKey="value"
                   stroke="#000"
-                  shape={<CustomizedLine />}
+                  // shape={<CustomizedLine />}
                   dot={(props) => {
                     const { cx, cy, value } = props;
                     const color =
