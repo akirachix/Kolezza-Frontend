@@ -1,261 +1,194 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import Layout from "@/app/Layout";
-import PatientDetails from "@/app/components/PatientDetails";
-import { Line } from "react-chartjs-2";
 import {
-  Chart as ChartJS,
-  LineElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
   Tooltip,
-} from "chart.js";
+  ResponsiveContainer,
+  ReferenceArea,
+  Legend,
+} from "recharts";
+import PatientDetails from "@/app/components/PatientDetails"; // Make sure you have this component imported
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip);
-interface ProgressData {
-  ts: number;
-  values: {
-    expected_text: string;
-    recognized_text: string;
-    correct: boolean;
-    stars_earned: number;
-    elapsed_time: number;
-  };
-}
-const TimeFilter = {
-  DAILY: "daily",
+const DataFilter = {
+  ALL: "all",
   WEEKLY: "weekly",
-  MONTHLY: "monthly",
 } as const;
 
-type TimeFilterType = typeof TimeFilter[keyof typeof TimeFilter];
+type DataFilterType = typeof DataFilter[keyof typeof DataFilter];
 
-const timeFilterOptions = [
-  { value: TimeFilter.DAILY, label: "Daily Average" },
-  { value: TimeFilter.WEEKLY, label: "Weekly Average" },
-  { value: TimeFilter.MONTHLY, label: "Monthly Average" },
+const dataFilterOptions = [
+  { value: DataFilter.ALL, label: "All Data (Default)" },
+  { value: DataFilter.WEEKLY, label: "Last Week" },
 ];
+
 const PatientPage = ({ params }: { params: { id: string } }) => {
   const { id } = params;
-  const [progressData, setProgressData] = useState<ProgressData[]>([]);
-  const [timeFilter, setTimeFilter] = useState<TimeFilterType>(TimeFilter.DAILY);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [data, setData] = useState<any[]>([]);
+  const [dataFilter, setDataFilter] = useState<DataFilterType>(DataFilter.ALL);
+
   useEffect(() => {
-    if (id === "2") {
-      const childData: ProgressData[] = [
-        {
-          ts: new Date('2024-10-17T09:00:00').getTime(),
-          values: { expected_text: "This is a ball", recognized_text: "This is a ball", correct: true, stars_earned: 1, elapsed_time: 1.2 },
-        },
-        {
-          ts: new Date('2024-10-18T09:00:00').getTime(),
-          values: { expected_text: "This is a cat", recognized_text: "This is a cat", correct: true, stars_earned: 1, elapsed_time: 2.5 },
-        },
-        {
-          ts: new Date('2024-10-19T09:00:00').getTime(),
-          values: { expected_text: "This is a bed", recognized_text: "This is a dog", correct: false, stars_earned: 0, elapsed_time: 3.0 },
-        },
-        {
-          ts: new Date('2024-10-20T09:00:00').getTime(),
-          values: { expected_text: "This is a donkey", recognized_text: "This is a donkey", correct: true, stars_earned: 1, elapsed_time: 1.8 },
-        },
-        {
-          ts: new Date('2024-10-21T09:00:00').getTime(),
-          values: { expected_text: "This is a car", recognized_text: "This is a car", correct: true, stars_earned: 2, elapsed_time: 2.0 },
-        },
-        {
-          ts: new Date('2024-10-22T09:00:00').getTime(),
-          values: { expected_text: "This is an apple", recognized_text: "This is an orange", correct: false, stars_earned: 0, elapsed_time: 4.5 },
-        },
-        {
-          ts: new Date('2024-10-23T09:00:00').getTime(),
-          values:{ expected_text:"This is a tree", recognized_text:"This is a tree", correct:true , stars_earned :1 , elapsed_time :1.5},
-        },
-        {
-          ts:new Date('2024-10-24T09 :00 :00').getTime(),
-          values:{ expected_text:"This is a house", recognized_text:"This is a house", correct:true , stars_earned :3 , elapsed_time :2.8},
-        },
-        {
-          ts:new Date('2024-10-25T09 :00 :00').getTime(),
-          values:{ expected_text:"This is a fish", recognized_text:"This is a bird", correct:false , stars_earned :0 , elapsed_time :3.3},
-        },
-        {
-          ts:new Date('2024-10-26T09 :00 :00').getTime(),
-          values:{ expected_text:"This is a bicycle", recognized_text:"This is a bicycle", correct:true , stars_earned :1 , elapsed_time :2.1},
-        },
-        {
-          ts:new Date('2024-10-27T09 :00 :00').getTime(),
-          values:{ expected_text:"This is a laptop", recognized_text:"This is a laptop", correct:true , stars_earned :1 , elapsed_time :2.4},
-        },
-        {
-          ts:new Date('2024-10-28T09 :00 :00').getTime(),
-          values:{ expected_text:"This is a phone", recognized_text:"This is a phone", correct:true , stars_earned :2 , elapsed_time :1.9},
-        },
-        {
-          ts:new Date('2024-10-29T09 :00 :00').getTime(),
-          values:{ expected_text:"This is a tablet", recognized_text:"This is a book", correct:false , stars_earned :0 , elapsed_time :3.8},
-        },
-        {
-          ts:new Date('2024-10-30T09 :00 :00').getTime(),
-          values:{ expected_text:"This is a shirt", recognized_text:"This is a shirt", correct:true , stars_earned :2 , elapsed_time :2.7},
-        },
-        {
-          ts:new Date('2024-10-31T09 :00 :00').getTime(),
-          values:{ expected_text:"This is a cup", recognized_text:"This is a mug", correct:false , stars_earned :0 , elapsed_time :3.1},
-        },
-        {
-          ts:new Date('2024-11-01T09 :00 :00').getTime(),
-          values:{ expected_text:"This is a watch", recognized_text:"This is a clock", correct:false , stars_earned :0 , elapsed_time :4.0},
-        },
-        {
-          ts:new Date('2024-11-02T09 :00 :00').getTime(),
-          values:{ expected_text:"This is a mouse", recognized_text:"This is a mouse", correct:true , stars_earned :1 , elapsed_time :1.5},
-        },
-        {
-          ts:new Date('2024-11-03T09 :00 :00').getTime(),
-          values:{ expected_text:"This is a keyboard", recognized_text:"This is a keyboard", correct:true , stars_earned :2 , elapsed_time :1.6},
-        },
-        {
-          ts:new Date('2024-11-04T09 :00 :00').getTime(),
-          values:{ expected_text:"This is a sofa", recognized_text:"This is a couch", correct:false , stars_earned :0 , elapsed_time :3.2},
-        }
-      ];
-      setProgressData(childData);
+    const startDate = new Date("2024-11-9");
+    const baseData = Array.from({ length: 10 }, (_, i) => {
+      const date = new Date(startDate);
+      date.setDate(startDate.getDate() + i);
+      const dateString = `${date.toLocaleString("default", { month: "short" })} ${date.getDate()}`;
+      return { name: dateString, value: Math.floor(Math.random() * 40) + 20 };
+    });
+
+    setData(baseData);
+  }, []);
+
+  useEffect(() => {
+    if (dataFilter === DataFilter.WEEKLY) {
+      setData((prev) => prev.slice(-7));
     }
-  }, [id]);
+  }, [dataFilter]);
 
-  const processData = (data: ProgressData[], filter: TimeFilterType) => {
-    const grouped = new Map();
-    const startOfOctober = new Date('2024-10-17').getTime(); // Starting point for filtering
+  const CustomizedLine = ({ points }: any) => {
+    return (
+      <g>
+        {points.map((point: any, index: number) => {
+          if (index === points.length - 1) return null;
 
-    data.forEach((entry) => {
-      const date = new Date(entry.ts);
-      
-      if (date.getTime() < startOfOctober) return; 
+          const nextPoint = points[index + 1];
+          const value = point.payload.value;
+          const color = value <= 30 ? "#4CAF50" : value <= 40 ? "#2196F3" : "#F44336";
 
-      let key;
-
-      switch (filter) {
-        case TimeFilter.DAILY:
-          key = date.toLocaleDateString('en-US', { month:'short', day:'numeric' });
-          break;
-        case TimeFilter.WEEKLY:
-          const startOfWeek = new Date(date);
-          startOfWeek.setDate(date.getDate() - date.getDay() + 1); // Start from Monday
-          
-           // Calculate week number
-           const weekNumber = Math.ceil((startOfWeek.getDate() -1) /7);
-           key = `Week ${weekNumber} of October`;
-           break;
-         case TimeFilter.MONTHLY:
-           key = date.toLocaleDateString('en-US', { month:'long', year:'numeric' });
-           break;
-       }
-       if (!grouped.has(key)) grouped.set(key,{ totalTime :0 , count :0 });
-       const current = grouped.get(key);
-       current.totalTime += entry.values.elapsed_time;
-       current.count +=1;
-    });
-
-    const sortedKeys = Array.from(grouped.keys()).sort((a,b) => new Date(a).getTime() - new Date(b).getTime());
-    
-    const averageData = sortedKeys.map(key => {
-      const { totalTime , count } = grouped.get(key);
-      return Number((totalTime / count).toFixed(2));
-    });
-
-    return { labels :sortedKeys , data :averageData };
-   };
-
-   if (!progressData.length) return <div className="flex justify-center items-center h-screen">Loading...</div>;
-
-   const { labels , data } = processData(progressData , timeFilter);
-
-   const chartData = {
-    labels,
-    datasets: [{
-      label: "Elapsed Time (s)",
-      data,
-      borderColor: "rgba(75, 192, 192, 1)",
-      backgroundColor: "rgba(75, 192, 192, 0.2)",
-      fill: true,
-      tension: 0.3,
-      borderWidth: 2,
-    }],
+          return (
+            <line
+              key={index}
+              x1={point.x}
+              y1={point.y}
+              x2={nextPoint.x}
+              y2={nextPoint.y}
+              stroke={color}
+              strokeWidth={2}
+            />
+          );
+        })}
+      </g>
+    );
   };
-  const chartOptions = {
-    responsive: true,
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Date",
-          font: { size: 16 },
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Elapsed Time (seconds)",
-          font: { size: 16 },
-        },
-      },
-    },
+
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      const value = payload[0].value;
+      let color = value <= 30 ? "#4CAF50" : value <= 40 ? "#2196F3" : "#F44336";
+      let status = value <= 30 ? "Good" : value <= 40 ? "Better" : "Critical";
+
+      return (
+        <div className="bg-white p-2 border border-gray-200 rounded shadow">
+          <p className="text-sm">{label}</p>
+          <p className="text-sm font-semibold" style={{ color }}>
+            {value} minutes ({status})
+          </p>
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
     <Layout>
-      <div className="flex flex-col items-center  pb-6">
+      <div className="flex flex-col pb-6 px-4">
+        {/* Patient Details Section */}
         <div className="w-full mb-8">
           <PatientDetails childId={id} />
         </div>
-        <h1 className="text-[2rem] mb-2">Progress Of A Child Overtime</h1>
-        <div className="flex justify-center w-full">
-          {id === "2" ? (
-            <div className="w-full max-w-7xl px-4">
-              <div className="mb-6 relative">
-                <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="w-56 px-4 py-2 text-left bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg">{timeFilterOptions.find(opt => opt.value === timeFilter)?.label}</span>
-                    <svg
-                      className={`w-5 h-5 transition-transform ${isDropdownOpen ? 'transform rotate-180' : ''}`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </div>
-                </button>
-                {isDropdownOpen && (
-                  <div className="absolute z-10 w-48 mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
-                    {timeFilterOptions.map((option) => (
-                      <button
-                        key={option.value}
-                        onClick={() => {
-                          setTimeFilter(option.value);
-                          setIsDropdownOpen(false);
-                        }}
-                        className={`block w-full px-4 py-2 text-left hover:bg-gray-100 focus:outline-none ${
-                          timeFilter === option.value ? 'bg-gray-100' : ''
-                        }`}
-                      >
-                        {option.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
+
+        {/* Name, Age, and Current Therapy Section */}
+      
+
+        {/* Engagement Frequency Analysis */}
+        <div className="w-full border rounded-lg shadow p-4 bg-white">
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold mb-4">Module Engagement Rate</h2>
+            <select
+              value={dataFilter}
+              onChange={(e) => setDataFilter(e.target.value as DataFilterType)}
+              className="w-56 px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none"
+            >
+              {dataFilterOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="h-[500px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart
+                data={data}
+                margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="name"
+                  label={{ value: "Date", position: "bottom", offset: 0 }}
+                />
+                <YAxis
+                  label={{
+                    value: "Elapsed Time (minutes)",
+                    angle: -90,
+                    position: "insideLeft",
+                    offset: -10,
+                  }}
+                  domain={[0, 60]}
+                />
+                <Tooltip content={<CustomTooltip />} />
+                <ReferenceArea y1={0} y2={30} fill="#4CAF50" fillOpacity={0.1} />
+                <ReferenceArea y1={30} y2={40} fill="#2196F3" fillOpacity={0.1} />
+                <ReferenceArea y1={40} y2={60} fill="#F44336" fillOpacity={0.1} />
+                <Line
+                  dataKey="value"
+                  stroke="#000"
+                  shape={<CustomizedLine />}
+                  dot={(props) => {
+                    const { cx, cy, value } = props;
+                    const color =
+                      value <= 30
+                        ? "#4CAF50"
+                        : value <= 40
+                        ? "#2196F3"
+                        : "#F44336";
+                    return (
+                      <circle
+                        cx={cx}
+                        cy={cy}
+                        r={4}
+                        fill={color}
+                        stroke="#fff"
+                        strokeWidth={2}
+                      />
+                    );
+                  }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className="flex justify-center mt-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 bg-green-500"></div>
+                <span className="text-sm">Good (0-30 min)</span>
               </div>
-              <div className="h-[500px] bg-white p-4 rounded-lg shadow">
-                <Line data={chartData} options={chartOptions} />
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 bg-blue-500"></div>
+                <span className="text-sm">Better (31-40 min)</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 bg-red-500"></div>
+                <span className="text-sm">Critical (41-60 min)</span>
               </div>
             </div>
-          ) : (
-            <div className="text-center text-gray-500">
-              Only user ID 2 has ThingsBoard integration enabled.
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </Layout>
@@ -263,3 +196,4 @@ const PatientPage = ({ params }: { params: { id: string } }) => {
 };
 
 export default PatientPage;
+
