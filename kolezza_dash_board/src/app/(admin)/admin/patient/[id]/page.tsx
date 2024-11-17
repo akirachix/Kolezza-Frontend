@@ -46,7 +46,7 @@ const PatientPage = ({ params }: { params: { id: string } }) => {
   // Generate historical data for both October and November
   const generateHistoricalData = () => {
     const data: ProgressData[] = [];
-    const today = new Date();
+ 
     
     // Generate data for October
     for (let day = 1; day <= 31; day++) {
@@ -115,8 +115,7 @@ const PatientPage = ({ params }: { params: { id: string } }) => {
   // Filter data based on selected filter option
   useEffect(() => {
     let filteredData = [...historicalData];
-    const now = new Date();
-
+ 
     if (dataFilter === DataFilter.NOVEMBER) {
       // Filter for November data
       filteredData = historicalData.filter(entry => {
